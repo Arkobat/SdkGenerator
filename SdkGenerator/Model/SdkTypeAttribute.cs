@@ -1,7 +1,7 @@
 ﻿namespace SdkGenerator.Model;
 
 [AttributeUsage(AttributeTargets.Property)]
-public class SdkType<T> : Attribute
+public class SdkTypeAttribute<T> : Attribute
 {
     private readonly Type _type = typeof(T);
 }

@@ -1,20 +1,19 @@
-﻿namespace SdkGenerator.Convertor.CSharp;
+﻿namespace SdkGenerator.Convertor.Typescript;
 
-public class CSharpClassConvertor : IClassConvertor
+public class TypeScriptClassConvertor : IClassConvertor
 {
-    public string TargetLanguage => Language.CSharp;
+    public string TargetLanguage => Language.TypeScript;
 
     public string ClassTemplate()
     {
         return
             """
-            namespace {{namespace}};
             {% for import in imports %}
-            using {{import}};{% endfor %}
+            import {{import}};{% endfor %}
 
-            public {% if interface %}interface{% else %}{% if abstract %}abstract {% endif %}class{% endif %} {{class_name}} {
+            export interface {{class_name}} {
             {% for property in properties %}
-                public {{property.type}} {{property.name}} { get; set; }{% endfor %}
+                {{property.name}}: {{property.type}}{% endfor %}
                 
             }
             """;
@@ -32,7 +31,6 @@ public class CSharpClassConvertor : IClassConvertor
 
     public string Property(string type, string name)
     {
-        return $$"""public {{type}} {{name}} {get; set;} """;
+        return $"{name}: {type}";
     }
-    
 }

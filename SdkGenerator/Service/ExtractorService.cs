@@ -2,6 +2,7 @@
 using SdkGenerator.Convertor;
 using SdkGenerator.Model;
 using SdkGenerator.Model.Example;
+using SdkGenerator.Model.Example.PersonExample;
 
 namespace SdkGenerator.Service;
 
