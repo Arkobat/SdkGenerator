@@ -4,3 +4,8 @@ obj/
 riderModule.iml
 /_ReSharper.Caches/
 .idea/
+
+/Templates/Java/target/
+/Templates/Java/.idea/
+
+/Templates/TypeScript/node_modules/
