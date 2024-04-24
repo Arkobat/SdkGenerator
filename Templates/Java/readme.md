@@ -7,8 +7,9 @@ To validate this, run `mvn -v` and `java -version`
 ## Step by step guide
 1) Check out the project `git clone git@github.com:Arkobat/SdkGenerator.git`
 2) Navigate to this folder `cd .\SdkGenerator\Templates\Java\`
-3) Install the dependencies `mvn install`
-4) Open the project in your desired IDE, and create the files needed
+3) Create a new branch for your changes `git swtich -c <branch_name>`. Replace `<branch_name>` with something unique, e.g. your GitHub username.
+4) Install the dependencies `mvn install`
+5) Open the project in your desired IDE, and create the files needed
    - You are free to create both folders and files as pleases you
    - This is an example DTO, you can take inspiration from.
 ```typescript
@@ -54,5 +55,6 @@ public class ExampleDto {
 
 }
 ```
-5) Build the project with `mvn package`
-6) Now you are done
+6) Build the project with `mvn package`
+7) Commit and push the files `git commit -am "Creates DTOs" && git push`
+8) Now you are done
