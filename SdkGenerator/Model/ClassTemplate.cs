@@ -7,7 +7,7 @@ public class ClassTemplate
     public required bool Interface { get; set; }
 
     public required string ClassName { get; set; }
-    public int Generics { get; set; }
+    public List<string>? Generics { get; set; }
 
     public required List<PropertyTemplate> Properties { get; set; }
 }

@@ -1,10 +1,13 @@
-﻿namespace SdkGenerator.Convertor.Typescript;
+﻿using System.Text;
+using SdkGenerator.Extension;
+
+namespace SdkGenerator.Convertor.Typescript;
 
 public class TypeScriptClassConvertor : IClassConvertor
 {
     public string TargetLanguage => Language.TypeScript;
 
-    public string ClassTemplate()
+    public string GetClassTemplate()
     {
         return
             """
@@ -21,10 +24,15 @@ public class TypeScriptClassConvertor : IClassConvertor
 
     public string Property(Property property)
     {
-        throw new NotImplementedException();
+        return new StringBuilder()
+            .Append(property.Name)
+            .AppendIf(property.Nullable, "?")
+            .Append(": ")
+            .Append(property.Type)
+            .ToString();
     }
 
-    public string Constructor(string className, List<Property> properties)
+    public string Constructor(string className, IEnumerable<Property> properties)
     {
         throw new NotImplementedException();
     }

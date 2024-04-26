@@ -4,7 +4,7 @@ public class CSharpClassConvertor : IClassConvertor
 {
     public string TargetLanguage => Language.CSharp;
 
-    public string ClassTemplate()
+    public string GetClassTemplate()
     {
         return
             """
@@ -25,7 +25,7 @@ public class CSharpClassConvertor : IClassConvertor
         throw new NotImplementedException();
     }
 
-    public string Constructor(string className, List<Property> properties)
+    public string Constructor(string className, IEnumerable<Property> properties)
     {
         throw new NotImplementedException();
     }

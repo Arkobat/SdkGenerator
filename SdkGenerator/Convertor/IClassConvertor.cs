@@ -2,11 +2,20 @@
 
 public interface IClassConvertor : IConvertor
 {
-    public string ClassTemplate();
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public string GetClassTemplate();
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="property"></param>
+    /// <returns></returns>
     public string Property(Property property);
 
-    public string Constructor(string className, List<Property> properties);
+    public string Constructor(string className, IEnumerable<Property> properties);
 }
 
 public class Property

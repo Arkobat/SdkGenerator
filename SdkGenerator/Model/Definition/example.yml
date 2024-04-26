@@ -1,0 +1,53 @@
+﻿schema_example_one:
+  "SdkGenerator.Model.Example.LivingEntity":
+    type: "object"
+    namespace: "SdkGenerator.Model.Example"
+    name: "LivingEntity"
+    abstract: true
+    properties:
+      - type: "int32"
+        name: "age"
+        nullable: false
+  "SdkGenerator.Model.Example.Person":
+    type: "object"
+    namespace: "SdkGenerator.Model.Example"
+    name: "Person"
+    extends: "SdkGenerator.Model.Example.LivingEntity"
+    properties:
+      - type: "string"
+        name: "firstname"
+        nullable: false
+  "SdkGenerator.Model.Example.MyEnum":
+    type: "enum"
+    namespace: "SdkGenerator.Model.Example"
+    name: "MyEnum"
+    values:
+      - "ValueOne"
+      - "ValueTwo"
+      - "ValueThree"
+        
+        
+schema_example_two:
+  - type: "object"
+    namespace: "SdkGenerator.Model.Example"
+    name: "LivingEntity"
+    abstract: true
+    properties:
+      - type: "int32"
+        name: "age"
+        nullable: false
+  - type: "object"
+    namespace: "SdkGenerator.Model.Example"
+    name: "Person"
+    extends: "SdkGenerator.Model.Example.LivingEntity"
+    properties:
+      - type: "string"
+        name: "firstname"
+        nullable: false
+  - type: "enum"
+    namespace: "SdkGenerator.Model.Example"
+    name: "MyEnum"
+    values:
+      - "ValueOne"
+      - "ValueTwo"
+      - "ValueThree"

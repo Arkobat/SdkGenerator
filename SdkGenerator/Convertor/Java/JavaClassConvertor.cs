@@ -8,7 +8,7 @@ public class JavaClassConvertor : IClassConvertor
 {
     public string TargetLanguage => Language.Java;
 
-    public string ClassTemplate()
+    public string GetClassTemplate()
     {
         return
             """
@@ -25,7 +25,7 @@ public class JavaClassConvertor : IClassConvertor
             
                 {{constructor}}
                 
-                {% for method in additinalInfo.methods %}
+                {% for method in data.methods %}
                 {{method}};{% endfor %}
                 
             }
@@ -50,7 +50,7 @@ public class JavaClassConvertor : IClassConvertor
         throw new NotImplementedException();
     }
 
-    public string Constructor(string className, List<Property> properties)
+    public string Constructor(string className, IEnumerable<Property> properties)
     {
         var props = properties.Where(p => p.Required);
         var sb = new StringBuilder()
