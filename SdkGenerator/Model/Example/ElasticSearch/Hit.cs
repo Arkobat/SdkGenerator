@@ -2,7 +2,7 @@
 
 namespace SdkGenerator.Model.Example.ElasticSearch;
 
-public sealed partial class Hit<TDocument>
+public class Hit<TDocument>
 {
     [JsonPropertyName("fields")] 
     public IReadOnlyDictionary<string, object>? Fields { get; init; }

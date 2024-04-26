@@ -2,7 +2,9 @@
 
 namespace SdkGenerator.Model.Example.ElasticSearch;
 
-public class DateRange
+public abstract class Range;
+
+public class DateRange : Range
 {
     [JsonPropertyName("gt")] public DateTimeOffset? GreaterThan { get; set; }
     [JsonPropertyName("gte")] public DateTimeOffset? GreaterThanOrEqualTo { get; set; }
@@ -10,7 +12,7 @@ public class DateRange
     [JsonPropertyName("lte")] public DateTimeOffset? LessThanOrEqualTo { get; set; }
 }
 
-public class DoubleRange
+public class DoubleRange : Range
 {
     [JsonPropertyName("gt")] public double? GreaterThan { get; set; }
     [JsonPropertyName("gte")] public double? GreaterThanOrEqualTo { get; set; }
@@ -18,7 +20,7 @@ public class DoubleRange
     [JsonPropertyName("lte")] public double? LessThanOrEqualTo { get; set; }
 }
 
-public class FloatRange
+public class FloatRange : Range
 {
     [JsonPropertyName("gt")] public float? GreaterThan { get; set; }
     [JsonPropertyName("gte")] public float? GreaterThanOrEqualTo { get; set; }
@@ -26,7 +28,7 @@ public class FloatRange
     [JsonPropertyName("lte")] public float? LessThanOrEqualTo { get; set; }
 }
 
-public class IntegerRange
+public class IntegerRange : Range
 {
     [JsonPropertyName("gt")] public int? GreaterThan { get; set; }
     [JsonPropertyName("gte")] public int? GreaterThanOrEqualTo { get; set; }
@@ -34,7 +36,7 @@ public class IntegerRange
     [JsonPropertyName("lte")] public int? LessThanOrEqualTo { get; set; }
 }
 
-public class LongRange
+public class LongRange : Range
 {
     [JsonPropertyName("gt")] public long? GreaterThan { get; set; }
     [JsonPropertyName("gte")] public long? GreaterThanOrEqualTo { get; set; }
@@ -42,7 +44,7 @@ public class LongRange
     [JsonPropertyName("lte")] public long? LessThanOrEqualTo { get; set; }
 }
 
-public class IpAddressRange
+public class IpAddressRange : Range
 {
     [JsonPropertyName("gt")] public string? GreaterThan { get; set; }
     [JsonPropertyName("gte")] public string? GreaterThanOrEqualTo { get; set; }
