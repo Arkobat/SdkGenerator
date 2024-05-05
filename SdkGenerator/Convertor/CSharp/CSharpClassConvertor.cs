@@ -1,4 +1,6 @@
-﻿namespace SdkGenerator.Convertor.CSharp;
+﻿using SdkGenerator.Model.Converter;
+
+namespace SdkGenerator.Convertor.CSharp;
 
 public class CSharpClassConvertor : IClassConvertor
 {
@@ -20,12 +22,12 @@ public class CSharpClassConvertor : IClassConvertor
             """;
     }
 
-    public string Property(Property property)
+    public string FormatProperty(ClassProperty classProperty)
     {
         throw new NotImplementedException();
     }
 
-    public string Constructor(string className, IEnumerable<Property> properties)
+    public string Constructor(string className, IEnumerable<ClassProperty> properties)
     {
         throw new NotImplementedException();
     }

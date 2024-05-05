@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using SdkGenerator.Extension;
+using SdkGenerator.Model.Converter;
 
 namespace SdkGenerator.Convertor.Typescript;
 
@@ -11,10 +12,9 @@ public class TypeScriptClassConvertor : IClassConvertor
     {
         return
             """
-            {% for import in imports %}
-            import {{import}};{% endfor %}
-
-            export interface {{class_name}} {
+            {% for import in imports %}import {{import}};
+            {% endfor %}
+            export interface {{class}} {
             {% for property in properties %}
                 {{property.name}}: {{property.type}}{% endfor %}
                 
@@ -22,17 +22,17 @@ public class TypeScriptClassConvertor : IClassConvertor
             """;
     }
 
-    public string Property(Property property)
+    public string FormatProperty(ClassProperty classProperty)
     {
         return new StringBuilder()
-            .Append(property.Name)
-            .AppendIf(property.Nullable, "?")
+            .Append(classProperty.Name)
+            .AppendIf(classProperty.Nullable, "?")
             .Append(": ")
-            .Append(property.Type)
+            .Append(classProperty.Type)
             .ToString();
     }
 
-    public string Constructor(string className, IEnumerable<Property> properties)
+    public string Constructor(string className, IEnumerable<ClassProperty> properties)
     {
         throw new NotImplementedException();
     }

@@ -1,12 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using SdkGenerator.Convertor;
-using SdkGenerator.Model;
-using SdkGenerator.Model.Example;
+﻿using SdkGenerator.Convertor;
+using SdkGenerator.Model.Converter;
+using SdkGenerator.Model.Definition;
 using SdkGenerator.Model.Example.PersonExample;
 
 namespace SdkGenerator.Service;
 
-public class ExtractorService(DtoDirectory dtoDirectory, IServiceProvider serviceProvider)
+public class ExtractorService(
+    DtoDirectory dtoDirectory)
 {
     public void AutoRegister()
     {
@@ -20,24 +20,26 @@ public class ExtractorService(DtoDirectory dtoDirectory, IServiceProvider servic
 
     private void Register(Type type)
     {
-        var services = serviceProvider.GetServices(typeof(ITypeConvertor<>));
-        
-        
+        if (DefaultTypeConverter.IsNative(type, out _)) return;
         var fullPath = $"{type.Namespace}.{type.Name}";
         if (dtoDirectory.IsRegistered(fullPath)) return;
 
-        var template = new ClassTemplate
+        var template = new ObjectSchema()
         {
             Namespace = type.Namespace ?? "",
-            Abstract = type.IsAbstract,
-            Interface = type.IsInterface,
-            ClassName = type.Name,
-            Properties = []
-            //  Properties = type.GetProperties().Select(p => new Property()
-            //  {
-            //      Name = p.Name,
-            //      Type = ParseGeneric(p.PropertyType)
-            //  }).ToList()
+            Name = type.Name,
+            //Properties= type.GetProperties().Select(p => p.PropertyType.Name).ToList()
+            Properties = type.GetProperties().Select(p =>
+            {
+                
+                var isNative = DefaultTypeConverter.IsNative(p.PropertyType, out var nativeType);
+                return new Property()
+                {
+                    Name = p.Name,
+                    Type = isNative ? nativeType! : p.PropertyType.FullName!,
+                    Nullable = false
+                };
+            }).ToList()
         };
 
         dtoDirectory.Register(template);
@@ -46,6 +48,8 @@ public class ExtractorService(DtoDirectory dtoDirectory, IServiceProvider servic
             Register(t);
         }
     }
+
+  
 
 
     private string ParseGeneric(Type type)

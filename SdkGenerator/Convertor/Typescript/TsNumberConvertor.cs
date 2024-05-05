@@ -14,6 +14,10 @@ public class TsNumberConvertor :
     ITypeConvertor<ulong>
 {
     public string TargetLanguage => Language.TypeScript;
+    public string ConvertProperty()
+    {
+        throw new NotImplementedException();
+    }
 
     private static string ConvertNumber() => "number";
 

@@ -1,4 +1,6 @@
-﻿namespace SdkGenerator.Convertor;
+﻿using SdkGenerator.Model.Converter;
+
+namespace SdkGenerator.Convertor;
 
 public interface IClassConvertor : IConvertor
 {
@@ -11,17 +13,17 @@ public interface IClassConvertor : IConvertor
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="property"></param>
+    /// <param name="classProperty"></param>
     /// <returns></returns>
-    public string Property(Property property);
+    public string FormatProperty(ClassProperty classProperty);
 
-    public string Constructor(string className, IEnumerable<Property> properties);
-}
-
-public class Property
-{
-    public required string Name { get; set; }
-    public required string Type { get; set; }
-    public required bool Required { get; set; }
-    public required bool Nullable { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="classTemplate"></param>
+    /// <returns></returns>
+    public ClassTemplate PostTransform(ClassTemplate classTemplate)
+    {
+        return classTemplate;
+    }
 }

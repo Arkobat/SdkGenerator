@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using SdkGenerator.Extension;
 using SdkGenerator.Model;
+using SdkGenerator.Model.Converter;
 
 namespace SdkGenerator.Convertor.Java;
 
@@ -13,17 +14,11 @@ public class JavaClassConvertor : IClassConvertor
         return
             """
             package {{namespace}};
-            
-            {% for import in imports %}
-            import {{import}};{% endfor %}
-            import a.b.c;
-            
-            {{class}} {
-                
+            {% for import in imports %}import {{import}};
+            {% endfor %}
+            public class {{class}} {
                 {% for property in properties %}
                 {{property}};{% endfor %}
-            
-                {{constructor}}
                 
                 {% for method in data.methods %}
                 {{method}};{% endfor %}
@@ -32,38 +27,22 @@ public class JavaClassConvertor : IClassConvertor
             """;
     }
 
-    public string Property(Property property)
+    public string FormatProperty(ClassProperty classProperty)
     {
         return new StringBuilder()
-            .AppendIf(property.Nullable, "@Nullable")
-            .AppendIf(!property.Nullable, "@NotNull")
+            .AppendIf(classProperty.Nullable, "@Nullable")
+            .AppendIf(!classProperty.Nullable, "@NotNull")
             .Append('\n').Append('\t')
             .Append("private")
-            .Append(' ').Append(property.Type)
-            .Append(' ').Append(property.Name)
+            .Append(' ').Append(classProperty.Type)
+            .Append(' ').Append(classProperty.Name)
             .ToString();
     }
 
-
-    public string GenericProperty(Property property)
+    public ClassTemplate PostTransform(ClassTemplate classTemplate)
     {
-        throw new NotImplementedException();
+        classTemplate.Imports.Add("import org.jetbrains.annotations.NotNull");
+        classTemplate.Imports.Add("import org.jetbrains.annotations.Nullable");
+        return classTemplate;
     }
-
-    public string Constructor(string className, IEnumerable<Property> properties)
-    {
-        var props = properties.Where(p => p.Required);
-        var sb = new StringBuilder()
-            .Append("public ").Append(className).Append('(')
-            .Append(props.Select(p => $"{p.Type} {p.Type}").JoinAsString(", "))
-            .Append(") {\n");
-        
-        foreach (var prop in props)
-        {
-            sb.Append("\t\t").Append("this.").Append(prop.Name).Append(" = ").Append(prop.Name).Append(";\n");
-        }
-
-        return sb.Append('}').ToString();
-    }
-
 }
