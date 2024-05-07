@@ -12,7 +12,7 @@ public class ObjectSchema : Schema
     public override SchemaType Type => SchemaType.Object;
     public bool? Abstract { get; set; } = false;
     public string? Extends { get; set; } 
-    public required List<Property> Properties { get; set; }
+    public required List<SchemaProperty> Properties { get; set; }
 }
 
 public class EnumSchema : Schema
@@ -21,7 +21,7 @@ public class EnumSchema : Schema
     public required List<string> Values { get; set; }
 }
 
-public class Property
+public class SchemaProperty
 {
     public required string Type { get; set; }
     public required string Name { get; set; }

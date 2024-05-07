@@ -31,14 +31,4 @@ public class TypeScriptClassConvertor : IClassConvertor
             .Append(classProperty.Type)
             .ToString();
     }
-
-    public string Constructor(string className, IEnumerable<ClassProperty> properties)
-    {
-        throw new NotImplementedException();
-    }
-
-    public string Property(string type, string name)
-    {
-        return $"{name}: {type}";
-    }
 }

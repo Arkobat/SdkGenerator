@@ -1,10 +1,24 @@
 ﻿using SdkGenerator.Model.Definition;
+using SdkGenerator.Service.Updated;
 
 namespace SdkGenerator.Service;
 
 public class DtoDirectory
 {
     private readonly Dictionary<string, Schema> _dictionary = new();
+    private readonly Dictionary<string, Type> _builtInTypes = new();
+
+    public DtoDirectory Register<T>(string name)
+    {
+        _builtInTypes.Add(name.ToLower(), typeof(T));
+        return this;
+    }
+
+    public bool TryGetBuiltIn(string name, out Type? type)
+    {
+        return _builtInTypes.TryGetValue(name, out type);
+    }
+    
 
     private string TemplateToPath(Schema template) => $"{template.Namespace}.{template.Name}";
 

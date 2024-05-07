@@ -26,7 +26,8 @@ public class ConverterService(
         var classConvertor = classConvertors.FirstOrDefault(c => c.TargetLanguage == language);
         if (classConvertor is null) throw new NullReferenceException("No template found for " + language);
 
-        var abc = new Abc(classConvertor, dtoDirectory, options, typeConvertors.Where(t => t.TargetLanguage == language));
+        var abc = new Abc(classConvertor, dtoDirectory, options,
+            typeConvertors.Where(t => t.TargetLanguage == language));
         abc.CloneTemplate(language);
         abc.CreateFiles(language);
     }
@@ -70,8 +71,8 @@ internal class Abc(
     {
         var classTemplate = classConvertor.GetClassTemplate();
         var template = Template.ParseLiquid(classTemplate);
-        
-        
+
+
         var classTemplates = TransformSchema(dtoDirectory.GetAll());
         //    var types = typeConvertors
         //        .Where(t => t.TargetLanguage == language)
@@ -118,12 +119,23 @@ internal class Abc(
                 .ToList(),
             Properties = s.Properties.Select(p =>
             {
-                
+                string typeName;
+                if (dtoDirectory.TryGetBuiltIn(p.Type, out var type))
+                {
+                    var converter = typeConvertors.FirstOrDefault(t => t.TypeToConvert() == type);
+                    if (converter is null) throw new NotImplementedException("No converted of type " + type!.FullName);
+                    typeName = converter.ConvertProperty(p);
+                }
+                else
+                {
+                    typeName = ParseType(p.Type);
+                }
+
                 return classConvertor.FormatProperty(new ClassProperty
                 {
-                    Type = ParseType(p.Type),
+                    Type = typeName,
                     Name = p.Name,
-                    Nullable = false
+                    Nullable = p.Nullable
                 });
             }).ToList()
         }).Select(classConvertor.PostTransform).ToList();
@@ -135,7 +147,7 @@ internal class Abc(
         if (paths.Length == 1) return null;
         return string.Join('.', paths[..^1]);
     }
-    
+
     private string ParseType(string fullPath)
     {
         return fullPath.Split('.')[^1];

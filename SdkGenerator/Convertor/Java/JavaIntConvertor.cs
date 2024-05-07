@@ -1,10 +1,27 @@
-﻿namespace SdkGenerator.Convertor.Java;
+﻿using SdkGenerator.Model.Definition;
+
+namespace SdkGenerator.Convertor.Java;
 
 public class JavaIntConvertor : ITypeConvertor<int>
 {
-    public string ConvertProperty()
+    public Type TypeToConvert() => typeof(int);
+
+    public string ConvertProperty(SchemaProperty context)
     {
-        throw new NotImplementedException();
+        return context.Nullable ? "Integer" : "int";
+    }
+
+    public string TargetLanguage => Language.Java;
+}
+
+public class JavaStringConvertor : ITypeConvertor<string>
+{
+    public Type TypeToConvert() => typeof(string);
+    
+
+    public string ConvertProperty(SchemaProperty context)
+    {
+        return "String";
     }
 
     public string TargetLanguage => Language.Java;

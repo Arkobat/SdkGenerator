@@ -6,7 +6,11 @@ using SdkGenerator.Convertor.Java;
 using SdkGenerator.Convertor.Typescript;
 using SdkGenerator.Model;
 using SdkGenerator.Service;
+using SdkGenerator.Service.Updated;
 
+new UpdatedProgram().Start();
+
+/*
 
 IServiceCollection serviceCollection = new ServiceCollection();
 serviceCollection
@@ -31,3 +35,4 @@ converter.Convert(Language.Java);
 //    var result = template.Render(type);
 //    Console.WriteLine(result);
 //}
+*/

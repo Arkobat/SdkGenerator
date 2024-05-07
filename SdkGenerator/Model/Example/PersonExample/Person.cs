@@ -9,4 +9,6 @@ public class Person
     [JsonPropertyName("age")] public required int Age { get; set; }
     [JsonPropertyName("address")] public required Address Address { get; set; }
     [JsonPropertyName("jobs")] public required List<Job> Jobs { get; set; }
+    [JsonPropertyName("parent")] public Person? Parent { get; set; }
+    [JsonPropertyName("child")] public Person? Child { get; set; }
 }
