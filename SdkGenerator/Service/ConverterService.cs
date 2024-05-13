@@ -5,6 +5,7 @@ using SdkGenerator.Convertor;
 using SdkGenerator.Model;
 using SdkGenerator.Model.Converter;
 using SdkGenerator.Model.Definition;
+using SdkGenerator.Shared.Model;
 
 namespace SdkGenerator.Service;
 

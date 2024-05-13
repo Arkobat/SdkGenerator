@@ -1,4 +1,4 @@
-﻿namespace SdkGenerator.Model.Definition;
+﻿namespace SdkGenerator.Shared.Model;
 
 public abstract class Schema
 {
@@ -12,6 +12,7 @@ public class ObjectSchema : Schema
     public override SchemaType Type => SchemaType.Object;
     public bool? Abstract { get; set; } = false;
     public string? Extends { get; set; } 
+    public required List<string>? Generics { get; set; }
     public required List<SchemaProperty> Properties { get; set; }
 }
 

@@ -1,4 +1,5 @@
 ﻿using SdkGenerator.Model.Definition;
+using SdkGenerator.Shared.Model;
 
 namespace SdkGenerator.Convertor.Java;
 
@@ -16,9 +17,6 @@ public class JavaIntConvertor : ITypeConvertor<int>
 
 public class JavaStringConvertor : ITypeConvertor<string>
 {
-    public Type TypeToConvert() => typeof(string);
-    
-
     public string ConvertProperty(SchemaProperty context)
     {
         return "String";

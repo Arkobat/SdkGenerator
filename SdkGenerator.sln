@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SdkGenerator", "SdkGenerator\SdkGenerator.csproj", "{F531BED9-2E3E-4B0D-A6C0-D053F6094214}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchemaExtractor", "SchemaExtractor\SchemaExtractor.csproj", "{C9C3DC3F-BABE-47A4-B06E-E19EF46ECA8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SdkGenerator.Shared", "SdkGenerator.Shared\SdkGenerator.Shared.csproj", "{08DFA0A7-8E4B-475E-8C13-1C8A7A6CD169}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{F531BED9-2E3E-4B0D-A6C0-D053F6094214}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F531BED9-2E3E-4B0D-A6C0-D053F6094214}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F531BED9-2E3E-4B0D-A6C0-D053F6094214}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9C3DC3F-BABE-47A4-B06E-E19EF46ECA8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9C3DC3F-BABE-47A4-B06E-E19EF46ECA8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9C3DC3F-BABE-47A4-B06E-E19EF46ECA8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9C3DC3F-BABE-47A4-B06E-E19EF46ECA8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08DFA0A7-8E4B-475E-8C13-1C8A7A6CD169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08DFA0A7-8E4B-475E-8C13-1C8A7A6CD169}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08DFA0A7-8E4B-475E-8C13-1C8A7A6CD169}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08DFA0A7-8E4B-475E-8C13-1C8A7A6CD169}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

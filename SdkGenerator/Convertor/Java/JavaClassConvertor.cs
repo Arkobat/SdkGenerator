@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using SdkGenerator.Extension;
-using SdkGenerator.Model;
 using SdkGenerator.Model.Converter;
 
 namespace SdkGenerator.Convertor.Java;
@@ -29,14 +28,8 @@ public class JavaClassConvertor : IClassConvertor
 
     public string FormatProperty(ClassProperty classProperty)
     {
-        return new StringBuilder()
-            .AppendIf(classProperty.Nullable, "@Nullable")
-            .AppendIf(!classProperty.Nullable, "@NotNull")
-            .Append('\n').Append('\t')
-            .Append("private")
-            .Append(' ').Append(classProperty.Type)
-            .Append(' ').Append(classProperty.Name)
-            .ToString();
+        return $"{(classProperty.Nullable ? "@Nullable" : "@NotNull")}\n\t" +
+               $"private {classProperty.Type} {classProperty.Name};";
     }
 
     public ClassTemplate PostTransform(ClassTemplate classTemplate)

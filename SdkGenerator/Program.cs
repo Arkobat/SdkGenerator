@@ -6,33 +6,43 @@ using SdkGenerator.Convertor.Java;
 using SdkGenerator.Convertor.Typescript;
 using SdkGenerator.Model;
 using SdkGenerator.Service;
-using SdkGenerator.Service.Updated;
-
-new UpdatedProgram().Start();
-
-/*
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 
 IServiceCollection serviceCollection = new ServiceCollection();
 serviceCollection
-    .AddScoped<DtoDirectory>()
-    .AddScoped<IClassConvertor, JavaClassConvertor>()
-    .AddScoped<IClassConvertor, TypeScriptClassConvertor>()
-    .AddScoped<ConverterService>()
+    .AddScoped<IDeserializer>(_ => new DeserializerBuilder()
+        .WithNamingConvention(CamelCaseNamingConvention.Instance)
+        .Build())
     .AddScoped<ConvertorOptions>()
-    .AddScoped<ExtractorService>();
+    .AddSingleton<ConverterService>()
+    .AddSingleton<DtoDirectory>()
+    .AddScoped<IClassConvertor, JavaClassConvertor>()
+    .AddScoped<ITypeConvertor, JavaStringConvertor>()
+    .AddScoped<ITypeConvertor, JavaIntConvertor>()
+    .AddScoped<IClassConvertor, TypeScriptClassConvertor>()
+    .AddScoped<ITypeConvertor, TsNumberConvertor>()
+    ;
 
 var serviceProvider = serviceCollection.BuildServiceProvider();
 
-var extractorService = serviceProvider.GetRequiredService<ExtractorService>();
-extractorService.AutoRegister();
+var dtoDirectory = serviceProvider.GetRequiredService<DtoDirectory>();
+dtoDirectory
+    .Register<bool>("boolean")
+    .Register<char>("char")
+    .Register<string>("string")
+    .Register<int>("int32")
+    .Register<long>("int64")
+    .Register<Guid>("guid")
+    .Register<DateOnly>("dateOnly")
+    .Register<DateTime>("date")
+    .Register<DateTimeOffset>("dateTimeOffset");
+
+foreach (var value in dtoDirectory.DefaultSchemas.Values)
+{
+    dtoDirectory.Register(value);
+}
 
 var converter = serviceProvider.GetRequiredService<ConverterService>();
 converter.Convert(Language.Java);
-//var template = Template.ParseLiquid(file);
-//
-//foreach (var type in dtoDirectory.GetAll())
-//{
-//    var result = template.Render(type);
-//    Console.WriteLine(result);
-//}
-*/
+
