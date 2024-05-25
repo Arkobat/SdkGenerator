@@ -1,0 +1,668 @@
+@startuml
+class PersonDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + BirthDate : DateTime <<get>> <<set>>
+    + <<required>> Address : AddressDto <<get>> <<set>>
+    + Hobbies : List<HobbyDto>? <<get>> <<set>>
+    + <<required>> Job : JobDto <<get>> <<set>>
+    + Calendar : CalendarDto? <<get>> <<set>>
+    + Phones : List<PhoneDto>? <<get>> <<set>>
+    + Emails : List<EmailDto>? <<get>> <<set>>
+    + Vehicles : List<VehicleDto>? <<get>> <<set>>
+    + Friends : List<FriendDto>? <<get>> <<set>>
+    + Subscriptions : List<SubscriptionDto>? <<get>> <<set>>
+    + Meetings : List<MeetingDto>? <<get>> <<set>>
+    + Payments : List<PaymentDto>? <<get>> <<set>>
+    + BankAccounts : List<BankAccountDto>? <<get>> <<set>>
+    + Insurances : List<InsuranceDto>? <<get>> <<set>>
+    + TravelPlans : List<TravelPlanDto>? <<get>> <<set>>
+    + Education : List<EducationDto>? <<get>> <<set>>
+    + Cases : List<CaseDto>? <<get>> <<set>>
+}
+class AddressDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Street : string <<get>> <<set>>
+    + <<required>> City : string <<get>> <<set>>
+    + <<required>> State : string <<get>> <<set>>
+    + <<required>> ZipCode : string <<get>> <<set>>
+    + <<required>> Country : CountryDto <<get>> <<set>>
+    + Residents : List<PersonDto>? <<get>> <<set>>
+    + Businesses : List<BusinessDto>? <<get>> <<set>>
+}
+class HobbyDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + Description : string? <<get>> <<set>>
+    + Participants : List<PersonDto>? <<get>> <<set>>
+    + Equipments : List<HobbyEquipmentDto>? <<get>> <<set>>
+}
+class JobDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Title : string <<get>> <<set>>
+    + Description : string? <<get>> <<set>>
+    + <<required>> Company : CompanyDto <<get>> <<set>>
+    + Salary : double <<get>> <<set>>
+    + Employees : List<PersonDto>? <<get>> <<set>>
+    + Departments : List<DepartmentDto>? <<get>> <<set>>
+}
+class CompanyDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + <<required>> Address : AddressDto <<get>> <<set>>
+    + Jobs : List<JobDto>? <<get>> <<set>>
+    + Employees : List<PersonDto>? <<get>> <<set>>
+    + Projects : List<ProjectDto>? <<get>> <<set>>
+}
+class CountryDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + <<required>> Code : string <<get>> <<set>>
+    + Addresses : List<AddressDto>? <<get>> <<set>>
+    + Schools : List<SchoolDto>? <<get>> <<set>>
+    + Hospitals : List<HospitalDto>? <<get>> <<set>>
+    + Citizens : List<PersonDto>? <<get>> <<set>>
+}
+class VehicleDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Make : string <<get>> <<set>>
+    + <<required>> Model : string <<get>> <<set>>
+    + Year : int <<get>> <<set>>
+    + <<required>> Owner : PersonDto <<get>> <<set>>
+    + ServiceRecords : List<ServiceRecordDto>? <<get>> <<set>>
+}
+class PhoneDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Number : string <<get>> <<set>>
+    + <<required>> Owner : PersonDto <<get>> <<set>>
+}
+class EmailDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> EmailAddress : string <<get>> <<set>>
+    + <<required>> Owner : PersonDto <<get>> <<set>>
+}
+class ProjectDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + Description : string? <<get>> <<set>>
+    + TeamMembers : List<PersonDto>? <<get>> <<set>>
+    + <<required>> Company : CompanyDto <<get>> <<set>>
+    + Tasks : List<TaskDto>? <<get>> <<set>>
+}
+class TaskDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Title : string <<get>> <<set>>
+    + Description : string? <<get>> <<set>>
+    + <<required>> AssignedTo : PersonDto <<get>> <<set>>
+    + <<required>> Project : ProjectDto <<get>> <<set>>
+}
+class DepartmentDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + <<required>> Company : CompanyDto <<get>> <<set>>
+    + Jobs : List<JobDto>? <<get>> <<set>>
+    + Employees : List<PersonDto>? <<get>> <<set>>
+    + InternalForum : ForumDto? <<get>> <<set>>
+}
+class EducationDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Degree : string <<get>> <<set>>
+    + <<required>> Institution : string <<get>> <<set>>
+    + StartDate : DateTime <<get>> <<set>>
+    + EndDate : DateTime <<get>> <<set>>
+    + <<required>> Skills : List<SkillDto> <<get>> <<set>>
+    + <<required>> Languages : List<LanguageDto> <<get>> <<set>>
+}
+class SkillDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + Proficiency : string? <<get>> <<set>>
+    + Certifications : List<CertificationDto>? <<get>> <<set>>
+    + Experience : List<ExperienceDto>? <<get>> <<set>>
+}
+class CertificationDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + <<required>> Issuer : string <<get>> <<set>>
+    + DateIssued : DateTime <<get>> <<set>>
+    + DateExpiry : DateTime? <<get>> <<set>>
+    + <<required>> Person : PersonDto <<get>> <<set>>
+}
+class LanguageDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + Proficiency : string? <<get>> <<set>>
+    + People : List<PersonDto>? <<get>> <<set>>
+}
+class ExperienceDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Title : string <<get>> <<set>>
+    + <<required>> Company : string <<get>> <<set>>
+    + StartDate : DateTime <<get>> <<set>>
+    + EndDate : DateTime? <<get>> <<set>>
+    + <<required>> Person : PersonDto <<get>> <<set>>
+}
+class MeetingDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Title : string <<get>> <<set>>
+    + StartTime : DateTime <<get>> <<set>>
+    + EndTime : DateTime <<get>> <<set>>
+    + Participants : List<PersonDto>? <<get>> <<set>>
+    + <<required>> Location : AddressDto <<get>> <<set>>
+    + <<required>> Appointment : AppointmentDto <<get>> <<set>>
+}
+class CalendarDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Owner : PersonDto <<get>> <<set>>
+    + Meetings : List<MeetingDto>? <<get>> <<set>>
+    + Events : List<EventDto>? <<get>> <<set>>
+}
+class EventDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + Date : DateTime <<get>> <<set>>
+    + Attendees : List<PersonDto>? <<get>> <<set>>
+    + <<required>> Location : AddressDto <<get>> <<set>>
+    + <<required>> Registration : EventRegistrationDto <<get>> <<set>>
+}
+class ReviewDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Content : string <<get>> <<set>>
+    + Rating : int <<get>> <<set>>
+    + <<required>> Reviewer : PersonDto <<get>> <<set>>
+    + <<required>> Product : ProductDto <<get>> <<set>>
+}
+class ProductDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + Description : string? <<get>> <<set>>
+    + Price : double <<get>> <<set>>
+    + <<required>> Manufacturer : CompanyDto <<get>> <<set>>
+    + Reviews : List<ReviewDto>? <<get>> <<set>>
+}
+class OrderDto {
+    + Id : int <<get>> <<set>>
+    + OrderDate : DateTime <<get>> <<set>>
+    + <<required>> Customer : PersonDto <<get>> <<set>>
+    + Products : List<ProductDto>? <<get>> <<set>>
+    + TotalAmount : double <<get>> <<set>>
+    + Invoice : InvoiceDto? <<get>> <<set>>
+}
+class InvoiceDto {
+    + Id : int <<get>> <<set>>
+    + InvoiceDate : DateTime <<get>> <<set>>
+    + <<required>> Order : OrderDto <<get>> <<set>>
+    + Amount : double <<get>> <<set>>
+    + DueDate : DateTime <<get>> <<set>>
+}
+class PaymentDto {
+    + Id : int <<get>> <<set>>
+    + Amount : double <<get>> <<set>>
+    + PaymentDate : DateTime <<get>> <<set>>
+    + <<required>> Invoice : InvoiceDto <<get>> <<set>>
+    + <<required>> Payer : PersonDto <<get>> <<set>>
+}
+class BankAccountDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> AccountNumber : string <<get>> <<set>>
+    + Balance : double <<get>> <<set>>
+    + <<required>> Owner : PersonDto <<get>> <<set>>
+    + Transactions : List<TransactionDto>? <<get>> <<set>>
+}
+class TransactionDto {
+    + Id : int <<get>> <<set>>
+    + Amount : double <<get>> <<set>>
+    + Date : DateTime <<get>> <<set>>
+    + <<required>> FromAccount : BankAccountDto <<get>> <<set>>
+    + <<required>> ToAccount : BankAccountDto <<get>> <<set>>
+}
+class InsuranceDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> PolicyNumber : string <<get>> <<set>>
+    + <<required>> Provider : string <<get>> <<set>>
+    + <<required>> Insured : PersonDto <<get>> <<set>>
+    + CoverageAmount : double <<get>> <<set>>
+    + <<required>> Policy : PolicyDto <<get>> <<set>>
+}
+class PolicyDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> PolicyName : string <<get>> <<set>>
+    + <<required>> PolicyHolder : PersonDto <<get>> <<set>>
+    + CoverageAmount : double <<get>> <<set>>
+    + StartDate : DateTime <<get>> <<set>>
+    + EndDate : DateTime? <<get>> <<set>>
+    + Insurances : List<InsuranceDto>? <<get>> <<set>>
+}
+class ServiceRecordDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> ServiceDate : DateTime <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+    + <<required>> Vehicle : VehicleDto <<get>> <<set>>
+}
+class HobbyEquipmentDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + <<required>> Hobby : HobbyDto <<get>> <<set>>
+    + Price : double <<get>> <<set>>
+}
+class FriendDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Friend : ContactDto <<get>> <<set>>
+    + FriendshipDate : DateTime <<get>> <<set>>
+    + Messages : List<MessageDto>? <<get>> <<set>>
+}
+class SubscriptionDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> ServiceName : string <<get>> <<set>>
+    + StartDate : DateTime <<get>> <<set>>
+    + EndDate : DateTime? <<get>> <<set>>
+    + <<required>> Subscriber : PersonDto <<get>> <<set>>
+}
+class BusinessDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + <<required>> Location : AddressDto <<get>> <<set>>
+    + Products : List<ProductDto>? <<get>> <<set>>
+    + Employees : List<PersonDto>? <<get>> <<set>>
+}
+class ContactDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + <<required>> PhoneNumber : string <<get>> <<set>>
+    + <<required>> Email : string <<get>> <<set>>
+    + <<required>> Owner : PersonDto <<get>> <<set>>
+}
+class MessageDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Content : string <<get>> <<set>>
+    + <<required>> Sender : PersonDto <<get>> <<set>>
+    + <<required>> Recipient : PersonDto <<get>> <<set>>
+    + Timestamp : DateTime <<get>> <<set>>
+}
+class AppointmentDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> AppointmentDate : DateTime <<get>> <<set>>
+    + <<required>> Person : PersonDto <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+}
+class FileDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> FileName : string <<get>> <<set>>
+    + <<required>> FilePath : string <<get>> <<set>>
+    + <<required>> FolderDto : FolderDto <<get>> <<set>>
+    + <<required>> Document : DocumentDto <<get>> <<set>>
+}
+class FolderDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> FolderName : string <<get>> <<set>>
+    + Files : List<FileDto>? <<get>> <<set>>
+    + <<required>> Owner : PersonDto <<get>> <<set>>
+}
+class DocumentDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> DocumentName : string <<get>> <<set>>
+    + <<required>> DocumentPath : string <<get>> <<set>>
+    + Note : NoteDto? <<get>> <<set>>
+}
+class NoteDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Content : string <<get>> <<set>>
+    + <<required>> CreatedAt : DateTime <<get>> <<set>>
+    + <<required>> Author : PersonDto <<get>> <<set>>
+}
+class ReminderDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Message : string <<get>> <<set>>
+    + <<required>> RemindAt : DateTime <<get>> <<set>>
+    + <<required>> Person : PersonDto <<get>> <<set>>
+}
+class GoalDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+    + <<required>> TargetDate : DateTime <<get>> <<set>>
+    + <<required>> Reminder : ReminderDto <<get>> <<set>>
+}
+class HabitDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> HabitName : string <<get>> <<set>>
+    + <<required>> Goal : GoalDto <<get>> <<set>>
+    + <<required>> StartDate : DateTime <<get>> <<set>>
+    + EndDate : DateTime? <<get>> <<set>>
+    + RoutineDto : RoutineDto? <<get>> <<set>>
+}
+class RoutineDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> RoutineName : string <<get>> <<set>>
+    + <<required>> Person : PersonDto <<get>> <<set>>
+    + Habits : List<HabitDto>? <<get>> <<set>>
+}
+class TravelPlanDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Destination : string <<get>> <<set>>
+    + <<required>> Traveler : PersonDto <<get>> <<set>>
+    + StartDate : DateTime <<get>> <<set>>
+    + EndDate : DateTime <<get>> <<set>>
+    + Accommodations : List<AccommodationDto>? <<get>> <<set>>
+    + <<required>> PassportDto : PassportDto <<get>> <<set>>
+    + TravelHabits : List<HabitDto>? <<get>> <<set>>
+}
+class AccommodationDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> HotelName : string <<get>> <<set>>
+    + <<required>> Location : AddressDto <<get>> <<set>>
+    + CheckInDate : DateTime <<get>> <<set>>
+    + CheckOutDate : DateTime <<get>> <<set>>
+    + <<required>> Guest : PersonDto <<get>> <<set>>
+}
+class PassportDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> PassportNumber : string <<get>> <<set>>
+    + <<required>> Holder : PersonDto <<get>> <<set>>
+    + IssueDate : DateTime <<get>> <<set>>
+    + ExpiryDate : DateTime <<get>> <<set>>
+    + Visa : VisaDto? <<get>> <<set>>
+}
+class VisaDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> VisaType : string <<get>> <<set>>
+    + <<required>> IssuedBy : CountryDto <<get>> <<set>>
+    + <<required>> Holder : PersonDto <<get>> <<set>>
+    + IssueDate : DateTime <<get>> <<set>>
+    + ExpiryDate : DateTime <<get>> <<set>>
+}
+class EventRegistrationDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Event : EventDto <<get>> <<set>>
+    + <<required>> Participant : PersonDto <<get>> <<set>>
+    + RegistrationDate : DateTime <<get>> <<set>>
+    + Workshop : WorkshopDto? <<get>> <<set>>
+}
+class WorkshopDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> WorkshopName : string <<get>> <<set>>
+    + <<required>> Date : DateTime <<get>> <<set>>
+    + <<required>> Location : AddressDto <<get>> <<set>>
+    + Session : List<SessionDto>? <<get>> <<set>>
+}
+class SessionDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> SessionName : string <<get>> <<set>>
+    + <<required>> StartTime : DateTime <<get>> <<set>>
+    + <<required>> EndTime : DateTime <<get>> <<set>>
+    + <<required>> Workshop : WorkshopDto <<get>> <<set>>
+    + Feedback : List<FeedbackDto>? <<get>> <<set>>
+}
+class FeedbackDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Content : string <<get>> <<set>>
+    + <<required>> Date : DateTime <<get>> <<set>>
+    + <<required>> Author : PersonDto <<get>> <<set>>
+    + <<required>> Survey : SurveyDto <<get>> <<set>>
+}
+class SurveyDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Title : string <<get>> <<set>>
+    + <<required>> CreatedDate : DateTime <<get>> <<set>>
+    + <<required>> Creator : PersonDto <<get>> <<set>>
+    + Questions : List<QuestionDto>? <<get>> <<set>>
+    + Polls : List<PollDto>? <<get>> <<set>>
+}
+class QuestionDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Text : string <<get>> <<set>>
+    + Answers : List<AnswerDto>? <<get>> <<set>>
+}
+class AnswerDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Response : string <<get>> <<set>>
+    + <<required>> Question : QuestionDto <<get>> <<set>>
+    + <<required>> Respondent : PersonDto <<get>> <<set>>
+}
+class PollDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Question : string <<get>> <<set>>
+    + <<required>> CreatedDate : DateTime <<get>> <<set>>
+    + Options : List<OptionDto>? <<get>> <<set>>
+    + <<required>> Creator : PersonDto <<get>> <<set>>
+}
+class OptionDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Text : string <<get>> <<set>>
+    + <<required>> Poll : PollDto <<get>> <<set>>
+    + VoteCount : int <<get>> <<set>>
+}
+class ArticleDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Title : string <<get>> <<set>>
+    + <<required>> Content : string <<get>> <<set>>
+    + <<required>> Author : PersonDto <<get>> <<set>>
+    + PublishedDate : DateTime <<get>> <<set>>
+    + Comments : List<CommentDto>? <<get>> <<set>>
+}
+class CommentDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Content : string <<get>> <<set>>
+    + <<required>> Date : DateTime <<get>> <<set>>
+    + <<required>> Author : PersonDto <<get>> <<set>>
+    + <<required>> Article : ArticleDto <<get>> <<set>>
+    + Tags : List<TagDto>? <<get>> <<set>>
+}
+class TagDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + Articles : List<ArticleDto>? <<get>> <<set>>
+}
+class ForumDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Title : string <<get>> <<set>>
+    + Threads : List<ThreadDto>? <<get>> <<set>>
+    + <<required>> ActivityLog : ActivityLogDto <<get>> <<set>>
+}
+class ThreadDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Title : string <<get>> <<set>>
+    + <<required>> Forum : ForumDto <<get>> <<set>>
+    + <<required>> Creator : PersonDto <<get>> <<set>>
+    + <<required>> Category : CategoryDto <<get>> <<set>>
+    + Posts : List<PostDto>? <<get>> <<set>>
+}
+class CategoryDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + Articles : List<ArticleDto>? <<get>> <<set>>
+}
+class PostDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Content : string <<get>> <<set>>
+    + <<required>> Date : DateTime <<get>> <<set>>
+    + <<required>> Thread : ThreadDto <<get>> <<set>>
+    + <<required>> Author : PersonDto <<get>> <<set>>
+    + Achievement : AchievementDto? <<get>> <<set>>
+}
+class NotificationDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Message : string <<get>> <<set>>
+    + <<required>> Date : DateTime <<get>> <<set>>
+    + <<required>> Recipient : PersonDto <<get>> <<set>>
+}
+class ActivityLogDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Activity : string <<get>> <<set>>
+    + <<required>> Date : DateTime <<get>> <<set>>
+    + <<required>> Notifications : List<NotificationDto> <<get>> <<set>>
+}
+class AchievementDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + <<required>> DateAchieved : DateTime <<get>> <<set>>
+    + <<required>> Person : PersonDto <<get>> <<set>>
+}
+class RewardDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+    + <<required>> Date : DateTime <<get>> <<set>>
+    + <<required>> Person : PersonDto <<get>> <<set>>
+}
+class FineDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Reason : string <<get>> <<set>>
+    + <<required>> Date : DateTime <<get>> <<set>>
+    + Amount : double <<get>> <<set>>
+    + <<required>> Person : PersonDto <<get>> <<set>>
+}
+class ComplaintDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+    + <<required>> Date : DateTime <<get>> <<set>>
+    + <<required>> Complainant : PersonDto <<get>> <<set>>
+}
+class ReportDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Title : string <<get>> <<set>>
+    + <<required>> Complaint : ComplaintDto <<get>> <<set>>
+    + <<required>> Date : DateTime <<get>> <<set>>
+    + <<required>> Author : PersonDto <<get>> <<set>>
+    + Summary : string? <<get>> <<set>>
+    + Reward : RewardDto? <<get>> <<set>>
+}
+class CaseDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> CaseNumber : string <<get>> <<set>>
+    + <<required>> Report : ReportDto <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+    + <<required>> DateOpened : DateTime <<get>> <<set>>
+    + DateClosed : DateTime? <<get>> <<set>>
+    + <<required>> Evidence : List<EvidenceDto> <<get>> <<set>>
+    + <<required>> Witnesses : List<WitnessDto> <<get>> <<set>>
+    + <<required>> Juror : List<JurorDto> <<get>> <<set>>
+    + Sentence : SentenceDto? <<get>> <<set>>
+    + Appeal : AppealDto? <<get>> <<set>>
+    + <<required>> Files : List<FileDto> <<get>> <<set>>
+}
+class EvidenceDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+    + <<required>> Date : DateTime <<get>> <<set>>
+    + <<required>> Case : CaseDto <<get>> <<set>>
+    + <<required>> CollectedBy : PersonDto <<get>> <<set>>
+}
+class WitnessDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Person : PersonDto <<get>> <<set>>
+    + <<required>> Case : CaseDto <<get>> <<set>>
+    + <<required>> Testimony : TestimonyDto <<get>> <<set>>
+    + Date : DateTime <<get>> <<set>>
+}
+class TestimonyDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Witness : PersonDto <<get>> <<set>>
+    + <<required>> Case : CaseDto <<get>> <<set>>
+    + <<required>> Statement : string <<get>> <<set>>
+    + Date : DateTime <<get>> <<set>>
+}
+class JurorDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Person : PersonDto <<get>> <<set>>
+    + <<required>> Case : CaseDto <<get>> <<set>>
+    + <<required>> Verdict : string <<get>> <<set>>
+    + Date : DateTime <<get>> <<set>>
+}
+class SentenceDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+    + <<required>> Date : DateTime <<get>> <<set>>
+    + <<required>> Case : CaseDto <<get>> <<set>>
+    + Settlement : SettlementDto? <<get>> <<set>>
+    + Fine : FineDto? <<get>> <<set>>
+}
+class AppealDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Reason : string <<get>> <<set>>
+    + <<required>> Date : DateTime <<get>> <<set>>
+    + <<required>> Case : CaseDto <<get>> <<set>>
+    + <<required>> Appellant : PersonDto <<get>> <<set>>
+}
+class SettlementDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Terms : string <<get>> <<set>>
+    + <<required>> Date : DateTime <<get>> <<set>>
+    + <<required>> Case : CaseDto <<get>> <<set>>
+    + <<required>> SettlingParty : PersonDto <<get>> <<set>>
+}
+class MedicalRecordDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+    + <<required>> Date : DateTime <<get>> <<set>>
+    + <<required>> Patient : PersonDto <<get>> <<set>>
+    + <<required>> Doctor : DoctorDto <<get>> <<set>>
+    + Prescriptions : List<PrescriptionDto>? <<get>> <<set>>
+    + InsuranceClaim : InsuranceClaimDto? <<get>> <<set>>
+    + Benefit : BenefitDto? <<get>> <<set>>
+}
+class DoctorDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + <<required>> Hospital : HospitalDto <<get>> <<set>>
+}
+class HospitalDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + <<required>> Address : AddressDto <<get>> <<set>>
+    + Doctors : List<DoctorDto>? <<get>> <<set>>
+    + Patients : List<PatientDto>? <<get>> <<set>>
+}
+class PatientDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + <<required>> Hospital : HospitalDto <<get>> <<set>>
+    + MedicalRecords : List<MedicalRecordDto>? <<get>> <<set>>
+}
+class PrescriptionDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Medication : string <<get>> <<set>>
+    + <<required>> Date : DateTime <<get>> <<set>>
+    + <<required>> Doctor : DoctorDto <<get>> <<set>>
+    + <<required>> Patient : PersonDto <<get>> <<set>>
+}
+class InsuranceClaimDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> ClaimNumber : string <<get>> <<set>>
+    + <<required>> Date : DateTime <<get>> <<set>>
+    + <<required>> Claimant : PersonDto <<get>> <<set>>
+    + <<required>> Insurance : InsuranceDto <<get>> <<set>>
+}
+class BenefitDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+    + <<required>> Beneficiary : PersonDto <<get>> <<set>>
+    + <<required>> Insurance : InsuranceDto <<get>> <<set>>
+}
+class EnrollmentDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Course : string <<get>> <<set>>
+    + <<required>> Date : DateTime <<get>> <<set>>
+    + <<required>> Student : PersonDto <<get>> <<set>>
+    + <<required>> School : SchoolDto <<get>> <<set>>
+}
+class SchoolDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + <<required>> Address : AddressDto <<get>> <<set>>
+    + Enrollments : List<EnrollmentDto>? <<get>> <<set>>
+    + Courses : List<CourseDto>? <<get>> <<set>>
+}
+class CourseDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + <<required>> School : SchoolDto <<get>> <<set>>
+    + <<required>> Transcript : TranscriptDto <<get>> <<set>>
+    + Enrollments : List<EnrollmentDto>? <<get>> <<set>>
+}
+class TranscriptDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+    + <<required>> Date : DateTime <<get>> <<set>>
+    + <<required>> Student : PersonDto <<get>> <<set>>
+    + <<required>> School : SchoolDto <<get>> <<set>>
+}
+@enduml

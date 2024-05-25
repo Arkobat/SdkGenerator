@@ -1,4 +1,4 @@
-﻿namespace SdkGenerator.Shared.Model;
+﻿namespace SchemaConsumer.Shared.Model;
 
 public enum SchemaType
 {

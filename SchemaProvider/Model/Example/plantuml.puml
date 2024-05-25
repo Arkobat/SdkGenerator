@@ -1,0 +1,670 @@
+@startuml
+class PersonDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+}
+class AddressDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Street : string <<get>> <<set>>
+    + <<required>> City : string <<get>> <<set>>
+    + <<required>> State : string <<get>> <<set>>
+    + <<required>> ZipCode : string <<get>> <<set>>
+}
+class HobbyDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + Description : string? <<get>> <<set>>
+}
+class JobDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Title : string <<get>> <<set>>
+    + Description : string? <<get>> <<set>>
+    + Salary : double <<get>> <<set>>
+}
+class CompanyDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+}
+class CountryDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + <<required>> Code : string <<get>> <<set>>
+}
+class VehicleDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Make : string <<get>> <<set>>
+    + <<required>> Model : string <<get>> <<set>>
+    + Year : int <<get>> <<set>>
+}
+class PhoneDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Number : string <<get>> <<set>>
+}
+class EmailDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> EmailAddress : string <<get>> <<set>>
+}
+class ProjectDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + Description : string? <<get>> <<set>>
+}
+class TaskDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Title : string <<get>> <<set>>
+    + Description : string? <<get>> <<set>>
+}
+class DepartmentDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+}
+class EducationDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Degree : string <<get>> <<set>>
+    + <<required>> Institution : string <<get>> <<set>>
+}
+class SkillDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + Proficiency : string? <<get>> <<set>>
+}
+class CertificationDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + <<required>> Issuer : string <<get>> <<set>>
+}
+class LanguageDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + Proficiency : string? <<get>> <<set>>
+}
+class ExperienceDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Title : string <<get>> <<set>>
+    + <<required>> Company : string <<get>> <<set>>
+}
+class MeetingDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Title : string <<get>> <<set>>
+}
+class CalendarDto {
+    + Id : int <<get>> <<set>>
+}
+class EventDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+}
+class ReviewDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Content : string <<get>> <<set>>
+    + Rating : int <<get>> <<set>>
+}
+class ProductDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + Description : string? <<get>> <<set>>
+    + Price : double <<get>> <<set>>
+}
+class OrderDto {
+    + Id : int <<get>> <<set>>
+    + TotalAmount : double <<get>> <<set>>
+}
+class InvoiceDto {
+    + Id : int <<get>> <<set>>
+    + Amount : double <<get>> <<set>>
+}
+class PaymentDto {
+    + Id : int <<get>> <<set>>
+    + Amount : double <<get>> <<set>>
+}
+class BankAccountDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> AccountNumber : string <<get>> <<set>>
+    + Balance : double <<get>> <<set>>
+}
+class TransactionDto {
+    + Id : int <<get>> <<set>>
+    + Amount : double <<get>> <<set>>
+}
+class InsuranceDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> PolicyNumber : string <<get>> <<set>>
+    + <<required>> Provider : string <<get>> <<set>>
+    + CoverageAmount : double <<get>> <<set>>
+}
+class PolicyDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> PolicyName : string <<get>> <<set>>
+    + CoverageAmount : double <<get>> <<set>>
+}
+class ServiceRecordDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+}
+class HobbyEquipmentDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + Price : double <<get>> <<set>>
+}
+class FriendDto {
+    + Id : int <<get>> <<set>>
+}
+class SubscriptionDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> ServiceName : string <<get>> <<set>>
+}
+class BusinessDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+}
+class ContactDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+    + <<required>> PhoneNumber : string <<get>> <<set>>
+    + <<required>> Email : string <<get>> <<set>>
+}
+class MessageDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Content : string <<get>> <<set>>
+}
+class AppointmentDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+}
+class FileDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> FileName : string <<get>> <<set>>
+    + <<required>> FilePath : string <<get>> <<set>>
+}
+class FolderDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> FolderName : string <<get>> <<set>>
+}
+class DocumentDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> DocumentName : string <<get>> <<set>>
+    + <<required>> DocumentPath : string <<get>> <<set>>
+}
+class NoteDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Content : string <<get>> <<set>>
+}
+class ReminderDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Message : string <<get>> <<set>>
+}
+class GoalDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+}
+class HabitDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> HabitName : string <<get>> <<set>>
+}
+class RoutineDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> RoutineName : string <<get>> <<set>>
+}
+class TravelPlanDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Destination : string <<get>> <<set>>
+}
+class AccommodationDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> HotelName : string <<get>> <<set>>
+}
+class PassportDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> PassportNumber : string <<get>> <<set>>
+}
+class VisaDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> VisaType : string <<get>> <<set>>
+}
+class EventRegistrationDto {
+    + Id : int <<get>> <<set>>
+}
+class WorkshopDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> WorkshopName : string <<get>> <<set>>
+}
+class SessionDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> SessionName : string <<get>> <<set>>
+}
+class FeedbackDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Content : string <<get>> <<set>>
+}
+class SurveyDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Title : string <<get>> <<set>>
+}
+class QuestionDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Text : string <<get>> <<set>>
+}
+class AnswerDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Response : string <<get>> <<set>>
+}
+class PollDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Question : string <<get>> <<set>>
+}
+class OptionDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Text : string <<get>> <<set>>
+    + VoteCount : int <<get>> <<set>>
+}
+class ArticleDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Title : string <<get>> <<set>>
+    + <<required>> Content : string <<get>> <<set>>
+}
+class CommentDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Content : string <<get>> <<set>>
+}
+class TagDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+}
+class ForumDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Title : string <<get>> <<set>>
+}
+class ThreadDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Title : string <<get>> <<set>>
+}
+class CategoryDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+}
+class PostDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Content : string <<get>> <<set>>
+}
+class NotificationDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Message : string <<get>> <<set>>
+}
+class ActivityLogDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Activity : string <<get>> <<set>>
+}
+class AchievementDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+}
+class RewardDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+}
+class FineDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Reason : string <<get>> <<set>>
+    + Amount : double <<get>> <<set>>
+}
+class ComplaintDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+}
+class ReportDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Title : string <<get>> <<set>>
+    + Summary : string? <<get>> <<set>>
+}
+class CaseDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> CaseNumber : string <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+}
+class EvidenceDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+}
+class WitnessDto {
+    + Id : int <<get>> <<set>>
+}
+class TestimonyDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Statement : string <<get>> <<set>>
+}
+class JurorDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Verdict : string <<get>> <<set>>
+}
+class SentenceDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+}
+class AppealDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Reason : string <<get>> <<set>>
+}
+class SettlementDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Terms : string <<get>> <<set>>
+}
+class MedicalRecordDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+}
+class DoctorDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+}
+class HospitalDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+}
+class PatientDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+}
+class PrescriptionDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Medication : string <<get>> <<set>>
+}
+class InsuranceClaimDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> ClaimNumber : string <<get>> <<set>>
+}
+class BenefitDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+}
+class EnrollmentDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Course : string <<get>> <<set>>
+}
+class SchoolDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+}
+class CourseDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Name : string <<get>> <<set>>
+}
+class TranscriptDto {
+    + Id : int <<get>> <<set>>
+    + <<required>> Description : string <<get>> <<set>>
+}
+class "List`1"<T> {
+}
+PersonDto --> "BirthDate" DateTime
+PersonDto --> "Address" AddressDto
+PersonDto --> "Hobbies<HobbyDto>" "List`1"
+PersonDto --> "Job" JobDto
+PersonDto --> "Calendar" CalendarDto
+PersonDto --> "Phones<PhoneDto>" "List`1"
+PersonDto --> "Emails<EmailDto>" "List`1"
+PersonDto --> "Vehicles<VehicleDto>" "List`1"
+PersonDto --> "Friends<FriendDto>" "List`1"
+PersonDto --> "Subscriptions<SubscriptionDto>" "List`1"
+PersonDto --> "Meetings<MeetingDto>" "List`1"
+PersonDto --> "Payments<PaymentDto>" "List`1"
+PersonDto --> "BankAccounts<BankAccountDto>" "List`1"
+PersonDto --> "Insurances<InsuranceDto>" "List`1"
+PersonDto --> "TravelPlans<TravelPlanDto>" "List`1"
+PersonDto --> "Education<EducationDto>" "List`1"
+PersonDto --> "Cases<CaseDto>" "List`1"
+AddressDto --> "Country" CountryDto
+AddressDto --> "Residents<PersonDto>" "List`1"
+AddressDto --> "Businesses<BusinessDto>" "List`1"
+HobbyDto --> "Participants<PersonDto>" "List`1"
+HobbyDto --> "Equipments<HobbyEquipmentDto>" "List`1"
+JobDto --> "Company" CompanyDto
+JobDto --> "Employees<PersonDto>" "List`1"
+JobDto --> "Departments<DepartmentDto>" "List`1"
+CompanyDto --> "Address" AddressDto
+CompanyDto --> "Jobs<JobDto>" "List`1"
+CompanyDto --> "Employees<PersonDto>" "List`1"
+CompanyDto --> "Projects<ProjectDto>" "List`1"
+CountryDto --> "Addresses<AddressDto>" "List`1"
+CountryDto --> "Schools<SchoolDto>" "List`1"
+CountryDto --> "Hospitals<HospitalDto>" "List`1"
+CountryDto --> "Citizens<PersonDto>" "List`1"
+VehicleDto --> "Owner" PersonDto
+VehicleDto --> "ServiceRecords<ServiceRecordDto>" "List`1"
+PhoneDto --> "Owner" PersonDto
+EmailDto --> "Owner" PersonDto
+ProjectDto --> "TeamMembers<PersonDto>" "List`1"
+ProjectDto --> "Company" CompanyDto
+ProjectDto --> "Tasks<TaskDto>" "List`1"
+TaskDto --> "AssignedTo" PersonDto
+TaskDto --> "Project" ProjectDto
+DepartmentDto --> "Company" CompanyDto
+DepartmentDto --> "Jobs<JobDto>" "List`1"
+DepartmentDto --> "Employees<PersonDto>" "List`1"
+DepartmentDto --> "InternalForum" ForumDto
+EducationDto --> "StartDate" DateTime
+EducationDto --> "EndDate" DateTime
+EducationDto --> "Skills<SkillDto>" "List`1"
+EducationDto --> "Languages<LanguageDto>" "List`1"
+SkillDto --> "Certifications<CertificationDto>" "List`1"
+SkillDto --> "Experience<ExperienceDto>" "List`1"
+CertificationDto --> "DateIssued" DateTime
+CertificationDto --> "DateExpiry" DateTime
+CertificationDto --> "Person" PersonDto
+LanguageDto --> "People<PersonDto>" "List`1"
+ExperienceDto --> "StartDate" DateTime
+ExperienceDto --> "EndDate" DateTime
+ExperienceDto --> "Person" PersonDto
+MeetingDto --> "StartTime" DateTime
+MeetingDto --> "EndTime" DateTime
+MeetingDto --> "Participants<PersonDto>" "List`1"
+MeetingDto --> "Location" AddressDto
+MeetingDto --> "Appointment" AppointmentDto
+CalendarDto --> "Owner" PersonDto
+CalendarDto --> "Meetings<MeetingDto>" "List`1"
+CalendarDto --> "Events<EventDto>" "List`1"
+EventDto --> "Date" DateTime
+EventDto --> "Attendees<PersonDto>" "List`1"
+EventDto --> "Location" AddressDto
+EventDto --> "Registration" EventRegistrationDto
+ReviewDto --> "Reviewer" PersonDto
+ReviewDto --> "Product" ProductDto
+ProductDto --> "Manufacturer" CompanyDto
+ProductDto --> "Reviews<ReviewDto>" "List`1"
+OrderDto --> "OrderDate" DateTime
+OrderDto --> "Customer" PersonDto
+OrderDto --> "Products<ProductDto>" "List`1"
+OrderDto --> "Invoice" InvoiceDto
+InvoiceDto --> "InvoiceDate" DateTime
+InvoiceDto --> "Order" OrderDto
+InvoiceDto --> "DueDate" DateTime
+PaymentDto --> "PaymentDate" DateTime
+PaymentDto --> "Invoice" InvoiceDto
+PaymentDto --> "Payer" PersonDto
+BankAccountDto --> "Owner" PersonDto
+BankAccountDto --> "Transactions<TransactionDto>" "List`1"
+TransactionDto --> "Date" DateTime
+TransactionDto --> "FromAccount" BankAccountDto
+TransactionDto --> "ToAccount" BankAccountDto
+InsuranceDto --> "Insured" PersonDto
+InsuranceDto --> "Policy" PolicyDto
+PolicyDto --> "PolicyHolder" PersonDto
+PolicyDto --> "StartDate" DateTime
+PolicyDto --> "EndDate" DateTime
+PolicyDto --> "Insurances<InsuranceDto>" "List`1"
+ServiceRecordDto --> "ServiceDate" DateTime
+ServiceRecordDto --> "Vehicle" VehicleDto
+HobbyEquipmentDto --> "Hobby" HobbyDto
+FriendDto --> "Friend" ContactDto
+FriendDto --> "FriendshipDate" DateTime
+FriendDto --> "Messages<MessageDto>" "List`1"
+SubscriptionDto --> "StartDate" DateTime
+SubscriptionDto --> "EndDate" DateTime
+SubscriptionDto --> "Subscriber" PersonDto
+BusinessDto --> "Location" AddressDto
+BusinessDto --> "Products<ProductDto>" "List`1"
+BusinessDto --> "Employees<PersonDto>" "List`1"
+ContactDto --> "Owner" PersonDto
+MessageDto --> "Sender" PersonDto
+MessageDto --> "Recipient" PersonDto
+MessageDto --> "Timestamp" DateTime
+AppointmentDto --> "AppointmentDate" DateTime
+AppointmentDto --> "Person" PersonDto
+FileDto --> "FolderDto" FolderDto
+FileDto --> "Document" DocumentDto
+FolderDto --> "Files<FileDto>" "List`1"
+FolderDto --> "Owner" PersonDto
+DocumentDto --> "Note" NoteDto
+NoteDto --> "CreatedAt" DateTime
+NoteDto --> "Author" PersonDto
+ReminderDto --> "RemindAt" DateTime
+ReminderDto --> "Person" PersonDto
+GoalDto --> "TargetDate" DateTime
+GoalDto --> "Reminder" ReminderDto
+HabitDto --> "Goal" GoalDto
+HabitDto --> "StartDate" DateTime
+HabitDto --> "EndDate" DateTime
+HabitDto --> "RoutineDto" RoutineDto
+RoutineDto --> "Person" PersonDto
+RoutineDto --> "Habits<HabitDto>" "List`1"
+TravelPlanDto --> "Traveler" PersonDto
+TravelPlanDto --> "StartDate" DateTime
+TravelPlanDto --> "EndDate" DateTime
+TravelPlanDto --> "Accommodations<AccommodationDto>" "List`1"
+TravelPlanDto --> "PassportDto" PassportDto
+TravelPlanDto --> "TravelHabits<HabitDto>" "List`1"
+AccommodationDto --> "Location" AddressDto
+AccommodationDto --> "CheckInDate" DateTime
+AccommodationDto --> "CheckOutDate" DateTime
+AccommodationDto --> "Guest" PersonDto
+PassportDto --> "Holder" PersonDto
+PassportDto --> "IssueDate" DateTime
+PassportDto --> "ExpiryDate" DateTime
+PassportDto --> "Visa" VisaDto
+VisaDto --> "IssuedBy" CountryDto
+VisaDto --> "Holder" PersonDto
+VisaDto --> "IssueDate" DateTime
+VisaDto --> "ExpiryDate" DateTime
+EventRegistrationDto --> "Event" EventDto
+EventRegistrationDto --> "Participant" PersonDto
+EventRegistrationDto --> "RegistrationDate" DateTime
+EventRegistrationDto --> "Workshop" WorkshopDto
+WorkshopDto --> "Date" DateTime
+WorkshopDto --> "Location" AddressDto
+WorkshopDto --> "Session<SessionDto>" "List`1"
+SessionDto --> "StartTime" DateTime
+SessionDto --> "EndTime" DateTime
+SessionDto --> "Workshop" WorkshopDto
+SessionDto --> "Feedback<FeedbackDto>" "List`1"
+FeedbackDto --> "Date" DateTime
+FeedbackDto --> "Author" PersonDto
+FeedbackDto --> "Survey" SurveyDto
+SurveyDto --> "CreatedDate" DateTime
+SurveyDto --> "Creator" PersonDto
+SurveyDto --> "Questions<QuestionDto>" "List`1"
+SurveyDto --> "Polls<PollDto>" "List`1"
+QuestionDto --> "Answers<AnswerDto>" "List`1"
+AnswerDto --> "Question" QuestionDto
+AnswerDto --> "Respondent" PersonDto
+PollDto --> "CreatedDate" DateTime
+PollDto --> "Options<OptionDto>" "List`1"
+PollDto --> "Creator" PersonDto
+OptionDto --> "Poll" PollDto
+ArticleDto --> "Author" PersonDto
+ArticleDto --> "PublishedDate" DateTime
+ArticleDto --> "Comments<CommentDto>" "List`1"
+CommentDto --> "Date" DateTime
+CommentDto --> "Author" PersonDto
+CommentDto --> "Article" ArticleDto
+CommentDto --> "Tags<TagDto>" "List`1"
+TagDto --> "Articles<ArticleDto>" "List`1"
+ForumDto --> "Threads<ThreadDto>" "List`1"
+ForumDto --> "ActivityLog" ActivityLogDto
+ThreadDto --> "Forum" ForumDto
+ThreadDto --> "Creator" PersonDto
+ThreadDto --> "Category" CategoryDto
+ThreadDto --> "Posts<PostDto>" "List`1"
+CategoryDto --> "Articles<ArticleDto>" "List`1"
+PostDto --> "Date" DateTime
+PostDto --> "Thread" ThreadDto
+PostDto --> "Author" PersonDto
+PostDto --> "Achievement" AchievementDto
+NotificationDto --> "Date" DateTime
+NotificationDto --> "Recipient" PersonDto
+ActivityLogDto --> "Date" DateTime
+ActivityLogDto --> "Notifications<NotificationDto>" "List`1"
+AchievementDto --> "DateAchieved" DateTime
+AchievementDto --> "Person" PersonDto
+RewardDto --> "Date" DateTime
+RewardDto --> "Person" PersonDto
+FineDto --> "Date" DateTime
+FineDto --> "Person" PersonDto
+ComplaintDto --> "Date" DateTime
+ComplaintDto --> "Complainant" PersonDto
+ReportDto --> "Complaint" ComplaintDto
+ReportDto --> "Date" DateTime
+ReportDto --> "Author" PersonDto
+ReportDto --> "Reward" RewardDto
+CaseDto --> "Report" ReportDto
+CaseDto --> "DateOpened" DateTime
+CaseDto --> "DateClosed" DateTime
+CaseDto --> "Evidence<EvidenceDto>" "List`1"
+CaseDto --> "Witnesses<WitnessDto>" "List`1"
+CaseDto --> "Juror<JurorDto>" "List`1"
+CaseDto --> "Sentence" SentenceDto
+CaseDto --> "Appeal" AppealDto
+CaseDto --> "Files<FileDto>" "List`1"
+EvidenceDto --> "Date" DateTime
+EvidenceDto --> "Case" CaseDto
+EvidenceDto --> "CollectedBy" PersonDto
+WitnessDto --> "Person" PersonDto
+WitnessDto --> "Case" CaseDto
+WitnessDto --> "Testimony" TestimonyDto
+WitnessDto --> "Date" DateTime
+TestimonyDto --> "Witness" PersonDto
+TestimonyDto --> "Case" CaseDto
+TestimonyDto --> "Date" DateTime
+JurorDto --> "Person" PersonDto
+JurorDto --> "Case" CaseDto
+JurorDto --> "Date" DateTime
+SentenceDto --> "Date" DateTime
+SentenceDto --> "Case" CaseDto
+SentenceDto --> "Settlement" SettlementDto
+SentenceDto --> "Fine" FineDto
+AppealDto --> "Date" DateTime
+AppealDto --> "Case" CaseDto
+AppealDto --> "Appellant" PersonDto
+SettlementDto --> "Date" DateTime
+SettlementDto --> "Case" CaseDto
+SettlementDto --> "SettlingParty" PersonDto
+MedicalRecordDto --> "Date" DateTime
+MedicalRecordDto --> "Patient" PersonDto
+MedicalRecordDto --> "Doctor" DoctorDto
+MedicalRecordDto --> "Prescriptions<PrescriptionDto>" "List`1"
+MedicalRecordDto --> "InsuranceClaim" InsuranceClaimDto
+MedicalRecordDto --> "Benefit" BenefitDto
+DoctorDto --> "Hospital" HospitalDto
+HospitalDto --> "Address" AddressDto
+HospitalDto --> "Doctors<DoctorDto>" "List`1"
+HospitalDto --> "Patients<PatientDto>" "List`1"
+PatientDto --> "Hospital" HospitalDto
+PatientDto --> "MedicalRecords<MedicalRecordDto>" "List`1"
+PrescriptionDto --> "Date" DateTime
+PrescriptionDto --> "Doctor" DoctorDto
+PrescriptionDto --> "Patient" PersonDto
+InsuranceClaimDto --> "Date" DateTime
+InsuranceClaimDto --> "Claimant" PersonDto
+InsuranceClaimDto --> "Insurance" InsuranceDto
+BenefitDto --> "Beneficiary" PersonDto
+BenefitDto --> "Insurance" InsuranceDto
+EnrollmentDto --> "Date" DateTime
+EnrollmentDto --> "Student" PersonDto
+EnrollmentDto --> "School" SchoolDto
+SchoolDto --> "Address" AddressDto
+SchoolDto --> "Enrollments<EnrollmentDto>" "List`1"
+SchoolDto --> "Courses<CourseDto>" "List`1"
+CourseDto --> "School" SchoolDto
+CourseDto --> "Transcript" TranscriptDto
+CourseDto --> "Enrollments<EnrollmentDto>" "List`1"
+TranscriptDto --> "Date" DateTime
+TranscriptDto --> "Student" PersonDto
+TranscriptDto --> "School" SchoolDto
+@enduml
