@@ -12,8 +12,12 @@ public class JavaClassConvertor : IClassConvertor
     {
         return
             """
+            /**
+            * Auto generated class
+            */
+             
             package {{namespace}};
-            {% for import in imports %}import {{import}};
+            {% for import in imports %}{{import}};
             {% endfor %}
             public class {{class}} {
                 {% for property in properties %}

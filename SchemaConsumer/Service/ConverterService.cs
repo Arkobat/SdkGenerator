@@ -90,13 +90,13 @@ internal class InternalConvertor(
         foreach (var type in classTemplates)
         {
             var result = template.Render(type);
-            Console.WriteLine(result);
+            //Console.WriteLine(result);
 
             var classPath = type.Namespace.Replace('.', Path.DirectorySeparatorChar);
             var folder = string.Join(Path.DirectorySeparatorChar, ".", options.OutputDirectory, language, classPath);
             Directory.CreateDirectory(folder);
 
-            var targetPath = string.Join(Path.DirectorySeparatorChar, folder, type.Class + ".ts");
+            var targetPath = string.Join(Path.DirectorySeparatorChar, folder, type.Class + ".java");
             //Console.WriteLine("Creating file: " + targetPath);
             using (var fs = File.Create(targetPath))
             {

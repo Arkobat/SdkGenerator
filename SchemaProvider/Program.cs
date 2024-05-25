@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Diagnostics;
+using Microsoft.Extensions.DependencyInjection;
 using SchemaConsumer.Shared.Model;
 using SchemaExtractor.Model.Example;
 using SchemaExtractor.Service;
@@ -49,7 +50,10 @@ dtoDirectory
 
 var schemaProvider = serviceProvider.GetRequiredService<ClassProvider>();
 //schemaProvider.AddClass(typeof(AbsurdCase<object, object, object, object, object, object>));
+var stopwatch = Stopwatch.StartNew();
 schemaProvider.AddClass(typeof(PersonDto));
+var stopwatchElapsedMilliseconds = stopwatch.ElapsedMilliseconds;
+Console.WriteLine($"Elapsed time: {stopwatchElapsedMilliseconds} ms");
 
 var classes = schemaProvider.GetSchemes().Count;
 var props = schemaProvider.GetSchemes().Values.OfType<ObjectSchema>().SelectMany(s => s.Properties).Count();
@@ -57,7 +61,7 @@ var props = schemaProvider.GetSchemes().Values.OfType<ObjectSchema>().SelectMany
 var yamlSerializer= serviceProvider.GetRequiredService<ISerializer>();
 
 var yaml = yamlSerializer.Serialize(schemaProvider.GetSchemes());
-Console.WriteLine(yaml);
+//Console.WriteLine(yaml);
 
 // Save the yaml to a file
 File.WriteAllText("schema.yaml", yaml);

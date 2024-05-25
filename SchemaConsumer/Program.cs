@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using SchemaConsumer.Convertor;
 using SchemaConsumer.Convertor.Java;
@@ -52,5 +53,8 @@ foreach (var value in dtoDirectory.DefaultSchemas.Values)
 }
 
 var converter = serviceProvider.GetRequiredService<ConverterService>();
+var stopwatch = Stopwatch.StartNew();
 converter.Convert(Language.Java);
+var stopwatchElapsedMilliseconds = stopwatch.ElapsedMilliseconds;
+Console.WriteLine($"Elapsed time: {stopwatchElapsedMilliseconds} ms");
 
