@@ -16,8 +16,11 @@ var serviceProvider = new ServiceCollection()
 
 
 var deserializer = serviceProvider.GetRequiredService<IDeserializer>();
-var oldSchemas = YamlProvider.AllSchemes(deserializer).Values.ToList();
-var newSchemes = YamlProvider.AllSchemes(deserializer).Values.ToList();
+//var oldSchemas = YamlProvider.AllSchemes(deserializer).Values.ToList();
+//var newSchemes = YamlProvider.AllSchemes(deserializer).Values.ToList();
+
+var oldSchemas = YamlProvider.AllSchemes(deserializer);
+var newSchemes = YamlProvider.AllSchemes(deserializer);
 
 //((ObjectSchema) oldSchemas[0]).Name = "ChangedName_1";
 //((ObjectSchema) newSchemes[10]).Name = "ChangedName_2";
@@ -26,10 +29,18 @@ var newSchemes = YamlProvider.AllSchemes(deserializer).Values.ToList();
 //((ObjectSchema) oldSchemas[70]).Name = "ChangedName_5";
 //((ObjectSchema) newSchemes[00]).Name = "ChangedName_6";
 
-((ObjectSchema) newSchemes[0]).Properties[0].Type = "ChangedType";
+//((ObjectSchema) newSchemes[0]).Properties[0].Type = "ChangedType";
+
+// Change a property name in new schema
+((ObjectSchema) newSchemes.First().Value).Properties.Add(new SchemaProperty()
+{
+    Name = "NewProp",
+    Type = "string",
+    Nullable = false
+});
 
 
-var diffService= serviceProvider.GetRequiredService<DiffService>();
+var diffService = serviceProvider.GetRequiredService<DiffService>();
 
 var stopwatch = Stopwatch.StartNew();
 var result = diffService.Compare(oldSchemas, newSchemes);

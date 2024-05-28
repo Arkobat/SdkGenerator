@@ -5,38 +5,39 @@ namespace DiffChecker.Service;
 
 public class DiffService
 {
-    public List<ModelDiff> Compare(List<Schema> oldSchemas, List<Schema> newSchemas)
+    public List<ModelDiff> Compare(Dictionary<string, Schema> oldSchemas, Dictionary<string, Schema> newSchemas)
     {
-        var comparator = new SchemaComparator();
-        // Find all the schemas thas has been removed
-        var removedSchemas = oldSchemas.Except(newSchemas, comparator)
-            .Select(s => new ModelDiff()
+        var removedSchemas = oldSchemas.Keys.Except(newSchemas.Keys)
+            .Select(key => oldSchemas[key])
+            .Select(value => new ModelDiff()
             {
                 Type = DifferenceType.Removed,
-                Namespace = s.Namespace,
-                Name = s.Name,
+                Namespace = value.Namespace,
+                Name = value.Name,
                 Differences = [],
                 Properties = []
             }).ToList();
 
-        // Find all the new schemas that has been created
-        var addedSchemas = newSchemas.Except(oldSchemas, comparator)
-            .Select(s => new ModelDiff()
+        var addedSchemas = newSchemas.Keys.Except(oldSchemas.Keys)
+            .Select(key => newSchemas[key])
+            .Select(value => new ModelDiff()
             {
                 Type = DifferenceType.Added,
-                Namespace = s.Namespace,
-                Name = s.Name,
+                Namespace = value.Namespace,
+                Name = value.Name,
                 Differences = [],
                 Properties = []
             }).ToList();
 
-        // Get all schemas that are common in both old and new schemas
-        var commonSchemas = newSchemas.Intersect(oldSchemas, comparator)
-            .Select(newSchema =>
+        var commonSchemas = newSchemas.Keys.Intersect(oldSchemas.Keys)
+            .Select(key =>
             {
-                var oldSchema = oldSchemas.First(s => comparator.Equals(s, newSchema));
+                var oldSchema = oldSchemas[key];
+                var newSchema = newSchemas[key];
+
                 var differences = GetDifferences(oldSchema, newSchema).ToList();
-                var propertyDiffs = Compare(((ObjectSchema) oldSchema).Properties, ((ObjectSchema) newSchema).Properties);
+                var propertyDiffs = Compare(((ObjectSchema) oldSchema).Properties,
+                    ((ObjectSchema) newSchema).Properties);
                 if (differences.Count == 0 && propertyDiffs.Count == 0) return null;
 
                 return new ModelDiff()
@@ -180,7 +181,7 @@ public class DiffService
         var addedProps = newProps.Except(oldProps, comparator)
             .Select(s => new PropertyDiff()
             {
-                Type = DifferenceType.Removed,
+                Type = DifferenceType.Added,
                 Name = s.Name,
                 Differences = [],
             }).ToList();
