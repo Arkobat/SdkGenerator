@@ -1,0 +1,216 @@
+\section{Analysis \label{sec:analysis}}
+
+\subsection{Is there any need for the proposed solution?}
+In general, there are two types of code duplication; Code duplication within the same language, and code duplication across multiple languages.
+The latter is needed when developing a cross-language solution and needing DTOs for each language.
+Often a DTO is created in the native language for the API, and then copied to other languages that may use it.
+One of the main features of the proposed solution is to eliminate manual code duplication across languages. 
+When converting code, there is a high chance of producing human errors \cite{code-duplicate-template}, either by missing a property, making a typo, or other things.
+However, the chance of errors is not the only aspect the solution aims to reduce.
+Converting code is also a time-consuming task, that could be eliminated if an automatic tool is introduced.
+\\ \\
+By automating the conversion, and automatically generating the DTOs for other languages, the chance of errors can be removed, and it is estimated time to market is reduced for developers, as they no longer need to maintain multiple projects.
+
+\subsection{Time and error with manual conversion}
+A manual DTO conversion task is created to validate the solution's need. In this task, developers will convert three projects, and the results will be analyzed. 
+The time it takes individuals to convert all the DTOs in all projects will be examined, and the number of errors that occur in the final result will be counted.
+Each individual that participates will receive the same DTOs, and be asked to convert them to either Java or TypeScript.
+Each of the three projects relates to a separate domain and complexity, and all contain several DTOs.
+Table \ref{tab:lines_per_example_project} lists the projects, including how many files, classes, and properties there are. 
+\begin{table}[H]
+   \small
+   \centering
+   \begin{tabular}{lcccc}
+
+   \toprule
+   \textit{Project} & \textit{Files} & \textit{Classes} & \textit{Properties} & \textit{Properties pr class} \\ 
+   \midrule
+   Person Example & 4 & 4 & 12 & 3 \\
+   ElasticSearch Example & 4 & 10 & 54 & 5,4 \\
+   Setting Example & 5 & 16 & 93 & 5,8   \\
+   \midrule
+   Total & 13 & 30 & 157 & 5,2 \\
+
+   \bottomrule
+   \end{tabular}
+   \caption{Lines of code in example solution} 
+   \label{tab:lines_per_example_project}
+\end{table}
+\noindent
+By dividing the time total time it takes to convert all the DTOs with the amount of properties, we can create an estimate of how long it takes to convert a single DTO.
+This representation does not portray every developer but will give a baseline, which will serve as the groundwork for this project.
+It is also important to note, that this is only an indication for creating new DTOs, and not updating existing ones. If a DTO evolves, the model will need to be updated in all projects. While this may not take a long time, it is a task that the developer may forget. The possibility of this oblivion is not showcased in the examples, but reaming extremely relevant.
+\newline\newline
+When testing how long it takes to convert DTOs, three people, \textit{Person A}, \textit{Person B}, and \textit{Person C}, have agreed to help. 
+The procedure is to follow a pre-defined guide listed in the solution and record the entire conversion. 
+The guide can be viewed in Appendix \ref{appendix:convert_guide}.
+\begin{table}[H]
+   \small
+   \centering
+   \begin{tabular}{lccc}
+
+   \toprule
+   \textit{} & \textit{Person A} & \textit{Person B} & \textit{Person C} \\ 
+   \midrule
+   Target language & Java & Java & TypeScript \\
+   Time spent & 49m 38s & 1h 1m 07s & 44m 12s \\
+   \hspace{3mm} Person & 8m 28s & 12m 37s & 9m 24s \\  % 9:24
+   \hspace{3mm} ElasticSearch & 18m 27s & 20m 45s & 13m 48s \\ % 23:12 - 564s : 828s - 13m(780s) = 13m 48s
+   \hspace{3mm} Setting & 22m 43s & 27m 45s & 21m 0s \\ % 44:12 - 1392s = 1260s = 21m
+   Avg time per property & 18,97s  & 23,55s & 16,89s \\
+   Total errors & 3 & 157 & 0 \\
+   \hspace{3mm} Invalid casing & 1 & 0 & 0 \\
+   \hspace{3mm} Invalid syntax & 2 & 0 & 0 \\
+   \hspace{3mm} Invalid nullability & 0 & 157 & 0 \\
+   \bottomrule
+   \end{tabular}
+   \caption{Manual DTO conversion results} 
+   \label{tab:dto_task}
+\end{table}
+\noindent
+Table \ref{tab:dto_task} shows that the average time per property is 20,07 seconds, and errors are very likely to occur, even by experienced developers.
+To better understand the data, it is important to know the experience, domain knowledge, and post-mindset of each individual.
+
+\begin{itemize}
+    
+    \item \textbf{Person A} \\ % Mig
+    \textit{Experience}: Has multiple years of experience converting DTOs. \\
+    \textit{Domain knowlegde}: An expert in the domain. This person created all the DTOs. \\
+    \textit{Approach}: Copying the DTOs into the IDE, and converting the syntax. \\
+    \textit{Result summarized}: Even with much experience performing the task, the developer made multiple errors. Many of the errors were cought when the developer validated the results, however, a few errors slipped through, and ended up in the final result.\\
+    \textit{Post Conversion Mindset}: ''DTO conversion is one of the most boring tasks to perform. To entertain myself while doing it, I am always watching a movie or similar while converting.''
+    
+    \item \textbf{Person B} \\ % Tønnes
+    \textit{Experience}: Has never converted a DTO before, but has some experience developing in the chosen target language. \\
+    \textit{Domain knowledge}: None, has never seen the DTOs or similar DTOs before. \\
+    \textit{Approach}: Utilizing an AI, in this case, Copilot Prompt to automatically convert the DTOs, by copying one class at a time, and asking it to convert to Java. \\
+    \textit{Result summarized}: As the AI did not understand the requirements, it failed all nullability checks. Furthermore, it imported additional packages to handle JSON, even though the project already specified a way to do this. So, while the classes itself has no errors, and is fully functional, this approach did come with other issues.\\
+    \textit{Post Conversion Mindset}: ''The experience was alright, but I probably would not do it without Copilot.''
+    
+    \item \textbf{Person C} \\ % bit_knox
+    \textit{Experience}: Has multiple years of experience converting DTOs. \\
+    \textit{Domain knowledge}: Proficient, has not seen the DTOs beforehand, but has experience with familiar types. \\
+    \textit{Approach}: Utilizing an AI, in this case, GitHub Copilot, to automatically convert the DTOs. This was done by copying the class into the file, and letting Copilot suggest one property at a time. After all properties were converted, the invalid C\# code was deleted.\\
+    \textit{Result summarized}: As the TypeScript project was new, the developer used some of the time to research a JSON mapper and figure out the approach. This was done when converting the first project \textit{Person}. Afterward, the developer slowly converted one property at a time and validated the result Copilot gave. This resulted in no errors found when validating the final result. \\
+    \textit{Post Conversion Mindset}: ''A very boring and time-consuming task, where errors can easily occur because one tries to get it done quickly. If you can avoid it, that would certainly be advantageous''.
+
+\end{itemize}
+\noindent
+It becomes clear that the task of converting DTOs is a dull task, without much stimulation for the developer. 
+The use of AI tools, in this case Copilot helps, but still leaves the task unpleasant. The developers all further claimed, that should they continue, the error rate would most likely start increasing, as the lack of stimulation decreases the effort provided over time. 
+\newline\newline
+To put the data into a real-life scenario, an examination of all TicketBots properties is performed. Based on this examination, it is estimated that TicketBot currently has 431 properties it exposes in its API.
+\begin{equation}
+\label{equation:ticket_dto_time}
+    431 \text{ properties} \times 20,07 \text{ seconds/properties} = 2h\ 24m\ 10s
+\end{equation}
+Based on this, we can see in Equation \ref{equation:ticket_dto_time}, that it would take shy of 2,5 hours to convert all DTOs from TicketBot.
+This may not seem like a lot, however, this number is just for a one-time transformation and assumes there will be no errors that have to be later.
+As TicketBot is currently under rapid change, these DTOs often change, and would therefore have to be updated often.
+Furthermore, these are only the properties exposed in the API. TicketBot also uses DTOs for their message bus, which is not counted here. This is due to this part is still in development. It is estimated that these DTOs would reach the same number of properties, as those counted, resulting in double the amount of properties, and thereby shy of 5 hours needed to convert all properties.
+The same examination has not been performed with Digizuite, due to the complex structure of the system. When compared by an employee to TicketBot, it is estimated that there easily could be over 10x more properties, with the majority currently being unsupported by their public SDK.
+
+\subsection{Possible approaches to create a solution}
+While there are multiple solutions on the market today, which all explore the same options as the proposed solution, there is no direct match. This shows that there is a potential gap the solution can help fill. There are different ways to implement the solution. We will explore the following.
+\begin{itemize}
+    \item \textbf{JSON definition}: Like OpenAPI, a definition could be created, that describes all the models. It could take inspiration from OpenAPI, and build on top on that.
+    
+    \item \textbf{Language specific definition}: Like ElastichSearch, a standard could be created in a specific language, and from that standard convert it into SDKs.
+    
+    \item \textbf{Convert code directly}: Taking the source code directly from the projects, and turning them into SDKs.
+\end{itemize}
+
+
+\subsection{Advantages and disadvantages of each approach}
+\subsubsection*{JSON definition}
+There is a lot of existing documentation for this solution, as inspiration can be drawn from OpenAPI.
+Expanding on this foundation, it would not take long to complete the definition. However, the new definition would not be compatible with the original OpenAPI definition, as data models now should support polymorphism, and therefore lose inherited properties.
+Furthermore, managing a large-scale JSON definition manually can be cumbersome. 
+To overcome this task when using OpenAPI, different tools are often used to automatically convert a solution to an OpenAPI definition \cite{open-api-tools}.
+
+\subsubsection*{Language specific definition}
+The approach utilized by ElasticSearch solves the issue of the unmanageable JSON document. With data structures sorted by folders and files, it matches the real repository.
+Furthermore, the users can make use of their IDE's code suggestions and validation, allowing for a quicker and more pleasant development experience.
+As this code repository would be responsible for being a single source of truth for multiple languages, specific annotations could be created, even if the annotation was designed for a specific language. This could be relevant for renaming a data structure different for a specific language, should the name be a reserved keyword. 
+The major downside of this approach is that all models from existing codebases will need to be rewritten in the new repository. This can potentially prevent existing code spaces from adopting the solution.
+
+\subsubsection*{Convert code directly}
+By looking directly at the code for a project, and directly converting it to SDK's, the time needed for creating an SDK is completely removed. 
+This would be a fast way to create the SDK, as it is generated directly from the project. 
+However, this method is not without fault either. By utilizing this approach, the SDK creation will only be available for projects written in a single language. If the solution should be expanded to other languages, the entire SDK generator would have to be rewritten in said languages.
+
+\subsubsection*{Combining approaches}
+As stated, there is not one perfect solution. There are upsides and downsides to each approach. The most unlikely combination is it combines a language-specific definition with direct conversion of the code. The reason behind this is the fact that there is no point in having a language-specific definition, if the models still are created in the native language, and then converted. This would in practice just be a form for an SDK converter in itself.
+The other two approaches is to combine either \textit{Language specific definition} or \textit{Convert code directly} with the \textit{JSON definition}. This gives the advantage of having a well-defined JSON schema, without the cumbersome task of manually managing it.
+
+\subsection{The semantic difference checker}
+Alongside converting DTOs, it is proposed to analyze the models, in order to further reduce the risk of errors when updating the code.
+The specific suggestion is to have a master schema, and with every update validate if there are any breaking changes between the newly generated version and the master version. This would help make the DTOs more robust, as it could help to reduce unintentional human errors. 
+
+
+\subsection{Requirements for the solution}
+Based on the analysis, some requirements have been defined, which are defined in Table \ref{tab:requirements}.
+Each requirement has a category, which is referred to as an iteration, with each sub-requirement being a task in that iteration. This is elaborated in section \ref{sec:design}.
+The requirements are not ordered in any specific way.
+\begin{table}[H]
+   \small
+   \centering
+   \begin{ctabularx}{\textwidth}{llX}
+   
+   \toprule
+   \textit{\#} & \textit{Title} & \textit{Description} \\ 
+   \midrule
+
+   \textbf{1} & Default Class & Being able to convert a plain DTO. \\
+     \textbf{1.1} & \hspace{3mm} numeric & int32, int64 \\
+     \textbf{1.2} & \hspace{3mm} float & float, double \\
+     \textbf{1.3} & \hspace{3mm} Other types & boolean, char, string, etc. \\
+
+
+   \midrule
+    
+   \textbf{2} & Generics & Add support for generic types. \\
+     \textbf{2.1} & \hspace{3mm} Generic Class & A class should support a <T> generic type  \\
+     \textbf{2.2} & \hspace{3mm} Generic Property T & The class should be able to include property of type T, e.g. \textit{public T \{get;\}} \\
+     \textbf{2.3} & \hspace{3mm} Generic Property \textless T{\textgreater} & Generic properties should able to indicate the implementation of T, e.g. \textit{public List\textless T{\textgreater} \{get;\}} \\
+
+   \midrule
+
+   \textbf{3} & Collections & Being able to convert different kinds of collections. \\
+     \textbf{3.1} & \hspace{3mm} Array & While not being directly a collection, arrays are included in this step \\
+     \textbf{3.2} & \hspace{3mm} List & All implementations of list types \\
+     \textbf{3.3} & \hspace{3mm} Set & All implementations of set types \\
+     \textbf{3.4} & \hspace{3mm} Map & All implementations of list/ dictionary types \\
+
+   \midrule
+    
+   \textbf{4} & Polymorphism & Add polymorphism, and allow classes to be abstract and extend from another.  \\
+     \textbf{4.1} & \hspace{3mm} Abstract class & If the class is marked as abstract \\
+     \textbf{4.2} & \hspace{3mm} Extend class & Which class the class extends  \\
+
+   \midrule
+    
+   \textbf{5} & Inheritance & Add support for interfaces, and allow classes to implement interfaces \\
+
+   \midrule
+    
+   \textbf{6} & Settings & It should be possible for developers to configure the behavior to their liking. \\
+      \textbf{6.1} & \hspace{3mm} Casing & As the product is only a prototype, the only setting that is showcased, is the option to select what casing should be used. \\
+        \textbf{6.1.1} & \hspace{6mm} snake\_case \cite{case_camel} & \\
+        \textbf{6.1.2} & \hspace{6mm} camelCase \cite{case_snake} & \\
+        \textbf{6.1.3} & \hspace{6mm} PascalCase \cite{case_pascal} & \\
+
+   \midrule
+    
+   \textbf{7} & Diff Checker & There should be created a semantic version difference checker. \\
+      \textbf{7.1} & \hspace{3mm} Added types & It should be able to see newly added types. \\
+      \textbf{7.2} & \hspace{3mm} Removed types & It should be able to see removed types. \\
+      \textbf{7.3} & \hspace{3mm} Modified types & It should be able to detect changes in a type. \\
+   
+   \bottomrule
+   \end{ctabularx}
+   \caption{Requirements} 
+   \label{tab:requirements}
+\end{table}
+
+

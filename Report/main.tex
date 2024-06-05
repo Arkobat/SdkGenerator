@@ -1,0 +1,108 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper,top=4cm,bottom=4cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+\usepackage{authblk}
+\usepackage{color, colortbl}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[backend=biber,style=numeric,sorting=none]{biblatex} % bibliography
+\usepackage[toc,page]{appendix} % Appendixes
+\addbibresource{bibliography.bib} % bibliography
+
+\usepackage{fancyhdr} % Add headers
+\usepackage{lastpage} % Get total pages in document
+
+\usepackage{setspace}
+
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% begin header configuration
+\pagestyle{fancy}
+
+% Start fancyhdr settings
+\fancyhf{}
+\fancyhead[L]{\leftmark}  % section
+%\fancyhead[R]{\rightmark}  % subsection
+\fancyfoot[C]{\thepage} 
+\cfoot{\thepage\ of \pageref{LastPage}}
+% End fancyhdr settings
+% End header configuration
+
+\usepackage{amsmath} % Extra math functions
+\usepackage{lipsum}  
+
+\definecolor{RowHeader}{rgb}{0.827,0.827,0.827}
+\definecolor{high}{rgb}{0.7,0.5,0.5}
+\definecolor{severe}{rgb}{1,0.2,0.2}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{string}{rgb}{0.3,0.6,0.3}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{lightgray}{rgb}{0.95,0.95,0.95}
+
+\usepackage{tabularx} % Better tables
+\newenvironment{ctabularx}[1]{% or whatever name you like
+   \rowcolors{1}{}{lightgray}%
+   \tabularx{#1}%
+  }{%
+   \endtabularx
+}
+
+
+% Center captions
+\usepackage{caption}
+\captionsetup{font=footnotesize}
+\captionsetup{justification=centering, margin=1cm}
+
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float} % Required for inserting images
+
+\usepackage[hidelinks]{hyperref} % Generate clickable links in PDF (cites, references etc)
+%\usepackage{hyperref} % Generate clickable links in PDF (cites, references etc)
+\usepackage{booktabs} % To thicken table lines
+
+
+
+\input{setup/code}
+
+\newcommand{\lb}[0]{\\ \\}
+
+\title{Semantic Versioned SDK Generation: Streamlining Cross-Language Development}
+
+\onehalfspace
+\begin{document}
+
+\author{Kristian, Jørgensen}
+
+\include{report/_1-frontpage}
+% \include{report/99-problem}
+% \include{setup/articles}
+\include{report/_3-abstract}
+\tableofcontents
+\include{report/_2-vocabulary}
+\include{report/01-introduction}
+\include{report/02-related-work}
+\include{report/03-analysis}
+\include{report/04-design}
+\include{report/05-implementation}
+\include{report/06-evaluation}
+\include{report/07_future-work}
+\include{report/08_conclussion}
+
+
+\DeclareFieldFormat{urldate}{
+  \textit{(visited on: \thefield{urlday}/\thefield{urlmonth}/\thefield{urlyear})}
+} %% Set the last visited on text to DD-MM-YYYY
+\printbibliography[heading=bibintoc,]
+
+\newpage
+\begin{appendices}
+\input{report/appendix/code}
+\include{report/appendix/schemas}
+\include{report/appendix/convert_guide}
+\end{appendices}
+
+
+
+\end{document}

@@ -1,0 +1,80 @@
+\section{Introduction \label{sec:introduction}}
+Modern software systems are often composed of different languages. This is especially true for a microservice architecture. To effectively communicate between these services, developers often use Data Transferable Objects (DTO), which describe exactly how the data structure looks. These DTOs can be used in a RESTful API, in a message bus, in socket communication or much more. This means they are widely used, and lay the standard for the data.
+When developing within the same language, a Software Development KIT (SDK) can be created and published, allowing other team members to have access to the same DTO, ensuring they have all properties defined in their code base, and can access it all.
+However, when switching between languages, this is no longer possible, as they cannot use an SDK for another language. To solve this, developers often undertake the task of duplicating the classes in multiple languages, having a strictly typed SDK for each language they use in development. 
+This project aims to eliminate this manual conversion task.
+
+\subsection{How the DTOs are used in code spaces}
+A DTO is essentially a class structure, where properties are defined.
+They do not include any business logic, which is commonly associated with classes in Object-Oriented Programming (OOP). Instead, they focus solely on encapsulating data.
+Listing \ref{code:exmaple_dto} shows an example of two DTOs, defined in C\#
+\begin{lstlisting}[caption={Example of a C\# DTO}, label={code:exmaple_dto}, style=base_csharp]
+public class PersonDto
+{
+    public string FirstName { get; set; } 
+    public string LastName { get; set; } 
+    public DateOnly Birthday { get; set; } 
+    public string AddressDto { get; set; } 
+}
+
+public class AddressDto
+{
+    public string Road { get; set; } 
+    public int Number { get; set; } 
+    public int ZipCode { get; set; } 
+}
+\end{lstlisting}
+\noindent
+When a DTO has been defined, it can then be used in a project.
+Listings \ref{code:http_example_csahrp} and \ref{code:http_example_typescipt} show respectively how DTOs can be used in C\# or TypeScript when calling a RESTful API.
+This is only one of the uses for these DTOs. 
+In practice, they can be used everywhere data is exchanged, where the structure of the data is guaranteed.
+\begin{lstlisting}[caption={DTO used in a GET request in C\#}, label={code:http_example_csahrp}, style=base_csharp]
+var user = await httpClient
+    .CreateRequest($"localhost:3000/users/{userId}")
+    .Get<UserDto>();
+\end{lstlisting}
+\begin{lstlisting}[caption={DTO used in a GET request in TypeScript}, label={code:http_example_typescipt}, style=base_typescript]
+let user = await fetch(`localhost:3000/users/${userId}`)
+    .then(res => res.json())
+    .then((res: UserDto) => res);
+\end{lstlisting}
+
+\subsection{Real-life use cases from stakeholders \label{sec:intro_use_cases}}
+For the project to succeed, it must be viable in a real software system.
+To test this, the solution is developed in collaboration with TicketBot and Digizuite, which both use ASP.NET in their backend development, and both need a TypeScript SDK to develop their frontend and publish to customers.
+
+\subsubsection{TicketBot \label{sec:intro_ticketbot}}
+TicketBot is a small organization, with three developers, utilizing a microservice architecture.
+The backend is developed both in C\# and TypeScript, with shared DTOs both for the REST API and message bus.
+This means there are a lot of duplicate classes in both C\# and TypeScript. We would like to have a single source of truth that can be automatically converted into TypeScript when pushing an update.
+The project should therefore be able to convert a series of classes, not only limiting itself to the classes that are not exposed in the API. 
+As a result, it should be able to create both an internal, which the developers can use internally, and a public SDK that customers can use.
+To do this, it should be able to differentiate between internal and public endpoints, preferably by checking against the required authorization.
+To sum up, the project must be able to generate multiple SDK from a single source. A public SDK, that includes all classes used in the public part of our API, an internal SDK, that includes everything used by the internal API, and finally a message bus SDK, that contains all the classes used in the bus.
+
+\subsubsection{Digizuite \label{sec:intro_digizuite}}
+Digizuite is a large-scale enterprise, providing a Digital Asset Management (DAM) solution, used by large corporations. 
+This means Digizuite has a large number of assets in its system. All of these assets have a set of metadata assigned.
+This metadata is assigned in a complex metadata structure, having text fields, number fields, tree structures, and much more.
+This results in an advanced DTO structure, which includes both polymorphism and generic models.  
+Digizuite uses this API both internally and exposes it to clients, as many of them build on top with their own integrations.
+Currently, they provide a public TypeScript and C\# SDK, however, these SDKs do not provide full coverage but are instead updated on a ''we need to use this internally now'' basis, resulting in a deficient SDK.
+\newline\newline
+Due to this complex model structure, and the demand for a public SDK, Digizuite proposed this project, with a little twist.
+Instead of only generating the SDK, Digizuite would also like the ability to detect when a breaking change occurs in an update.
+The reason for this is that due to the complex structure, it is not always clear to developers what models are exposed, and therefore cannot be changed, and which models are internal, and allowed to be changed.
+As we would need to analyze the project to create the SDK, this could be the feature to make the project stand out.
+
+\subsection{The hypothesis}
+By understanding this issue, the following hypothesis is proposed:
+\begin{quote} 
+\centering 
+\textit{By automating the conversion of data objects between languages, developers can both save time and reduce bugs, when developing an SDK.}
+\end{quote}
+To validate the hypothesis, the following sub-hypotheses are proposed:
+\begin{itemize}
+    \item Automating the conversion of DTOs will greatly reduce the time spent developing multiple language SDKs.
+    \item Automated conversion will remove all possibility of manual human error
+\end{itemize}
+The hypothesis will be evaluated based on an initial analysis, followed by testing a prototype of the proposed solution.

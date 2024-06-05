@@ -1,0 +1,157 @@
+\section{Schema definitions \label{appendix:schemas}}
+\begin{table}[H]
+   \small
+   \centering
+   \begin{ctabularx}{\textwidth}{llX}
+   
+   \toprule
+   \multicolumn{3}{l}{\textbf{Schema Structure extends Schema Structure}} \\
+   \midrule
+   \textit{Field} & \textit{Type} & \textit{Description} \\ 
+   \midrule
+   type & string & The type of the schema, either \textit{object} or \textit{enum} \\
+   namespace & string & Which namespace the class belongs to \\
+   name & string & The name of the class \\
+
+   \midrule
+   \multicolumn{3}{l}{\textbf{Object Schema Structure extends Schema Structure}} \\
+   \midrule
+   \textit{Field} & \textit{Type} & \textit{Description} \\ 
+   \midrule
+   abstract? & boolean & If the class is an abstract class \\
+   extends? & string & Which class the class extends \\
+   properties & Property[] & A list of all the properties the class contains \\
+
+   \midrule
+   \multicolumn{3}{l}{\textbf{Enum Schema Structure extends Schema Structure}} \\
+   \midrule
+   \textit{Field} & \textit{Type} & \textit{Description} \\ 
+   \midrule
+   values & string[] & A list of all the enum values \\
+   
+   \midrule
+   \multicolumn{3}{l}{\textbf{Property Structure}} \\
+   \midrule
+   \textit{Field} & \textit{Type} & \textit{Description} \\ 
+   \midrule
+   type & string & The full name of the type, both namespace and class combined \\
+   name & string & The name of the property \\
+   nullable & boolean & If the property is marked as nullable \\
+   \bottomrule
+   \end{ctabularx}
+   \caption{Thrid iteration of the schema} 
+   \label{tab:schame_exmaple_three}
+\end{table}
+\begin{lstlisting}[caption={Thrid iteration of the schema}, label={code:schame_exmaple_three}, style=yaml]
+schemas:
+  - type: "object"
+    namespace: "SdkGenerator.Model.Example"
+    name: "LivingEntity"
+    abstract: true
+    properties:
+      - type: "int32"
+        name: "age"
+        nullable: false
+  - type: "object"
+    namespace: "SdkGenerator.Model.Example"
+    name: "Person"
+    extends: "SdkGenerator.Model.Example.LivingEntity"
+    properties:
+      - type: "string"
+        name: "firstname"
+        nullable: false
+  - type: "enum"
+    namespace: "SdkGenerator.Model.Example"
+    name: "MyEnum"
+    values:
+      - "ValueOne"
+      - "ValueTwo"
+      - "ValueThree"
+\end{lstlisting}
+
+
+\begin{table}[H]
+   \small
+   \centering
+   \begin{ctabularx}{\textwidth}{llX}
+   \toprule
+   \multicolumn{3}{l}{\textbf{Schema Structure}} \\
+   \midrule
+   \textit{Field} & \textit{Type} & \textit{Description} \\ 
+   \midrule
+   namespace & string & Which namespace the class belongs to \\
+   name & string & The name of the class \\
+   abstract? & boolean & If the class is an abstract class \\
+   extends? & string & Which class the class extends \\
+   properties & Property[] & A list of all the properties the class contains \\
+   \midrule
+   \multicolumn{3}{l}{\textbf{Property Structure}} \\
+   \midrule
+   \textit{Field} & \textit{Type} & \textit{Description} \\ 
+   \midrule
+   type & string & The full name of the type, both namespace and class combined \\
+   name & string & The name of the property \\
+   nullable & boolean & If the property is marked as nullable \\
+   \bottomrule
+   \end{ctabularx}
+   \caption{Second iteration of the schema} 
+   \label{tab:schame_exmaple_two}
+\end{table}
+\begin{lstlisting}[caption={Second iteration of the schema}, label={code:schame_exmaple_two}, style=yaml]
+schemas:
+  - namespace: "SdkGenerator.Model.Example"
+    name: "LivingEntity"
+    abstract: true
+    properties:
+      - type: "int32"
+        name: "age"
+        nullable: false
+  - namespace: "SdkGenerator.Model.Example"
+    name: "Person"
+    extends: "SdkGenerator.Model.Example.LivingEntity"
+    properties:
+      - type: "string"
+        name: "firstname"
+        nullable: false
+\end{lstlisting}
+
+
+\begin{table}[H]
+   \small
+   \centering
+   \begin{ctabularx}{\textwidth}{llX}
+
+   \toprule
+   \multicolumn{3}{l}{\textbf{Schema Structure}} \\
+   \midrule
+   \textit{Field} & \textit{Type} & \textit{Description} \\ 
+   \midrule
+   namespace & string & Which namespace the class belongs to \\
+   name & string & The name of the class \\
+   properties & Property[] & A list of all the properties the class contains \\
+   \midrule
+   \multicolumn{3}{l}{\textbf{Property Structure}} \\
+   \midrule
+   \textit{Field} & \textit{Type} & \textit{Description} \\ 
+   \midrule
+   type & string & The full name of the type, both namespace and class combined \\
+   name & string & The name of the property \\
+   \bottomrule
+   \end{ctabularx}
+   \caption{First iteration of the schema} 
+   \label{tab:schame_exmaple_one}
+\end{table}
+
+\begin{lstlisting}[caption={First iteration of the schema}, label={code:schame_exmaple_one}, style=yaml]
+schemas:
+  - namespace: "SdkGenerator.Model.Example"
+    name: "LivingEntity"
+    properties:
+      - type: "int32"
+        name: "age"
+  - namespace: "SdkGenerator.Model.Example"
+    name: "Person"
+    properties:
+      - type: "string"
+        name: "firstname"
+\end{lstlisting}

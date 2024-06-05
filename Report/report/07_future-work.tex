@@ -1,0 +1,84 @@
+\section{Future Work}
+As described earlier, the implemented solution is a primitive prototype, that acts as a proof of concept. This prototype would not be sufficient in a production environment, due to limited implementation and lack of features. This section will try to go through the steps needed, for the proposed solution to be effective in a real-life scenario.
+\subsection{Validation with costumers}
+As the project is not fully complete, it has not been verified with customers on their solutions.
+That said, the prototype is fully functional and ready to be presented to the stakeholders, but the final product is not ready for production, as several key elements that take it from a prototype to an integrated ready product are missing. Several of these missing parts will be discussed in this section.
+
+
+\subsection{Implementation of additional features}
+\subsubsection*{Adding configuration}
+One of the major features missing is the ability to configure the solution.
+It is impossible to create a single solution, that would please all developers out of the box. It is therefore important to be able to configure the solution.
+An analysis of which setting should be in a production-ready environment has not been made. However, a few settings are suggested.
+Some settings are relevant, no matter what the target language is.
+\begin{itemize}
+    \item \textbf{Property Naming Attribute}: Should the system add an explicit attribute to properties, stating the name of the property in a JSON scheme? 
+    \item \textbf{Property Naming Policy}: If the user does not provide a property name attribute, what naming policy should the system default to? 
+    \begin{itemize}
+        \item \textbf{Camel case}: Name the properties as \textit{camelCase}.
+        \item \textbf{Snake case}: Name the properties as \textit{snake\_case}.
+        \item \textbf{Pascal case}: Name the properties as \textit{PascalCase}.
+        \item \textbf{None}: Do not modify the property name in any way.
+    \end{itemize}
+    \item \textbf{Output directory}: Where should the outputted SDK be created?
+\end{itemize}
+\noindent
+On top of the general options, some options are specific for each individual language.
+\begin{itemize}
+    \item \textbf{Java: Root Package}: In Java, namespaces often has a root, often a domain the user owns. This setting indicates what, if anything, should be prepended to the namespace.
+    \item \textbf{Property Naming Policy}: If the user does not provide a property name attribute, what naming policy should the system default to? 
+    \item \textbf{Output directory}: Where should the outputted SDK be created?
+    
+\end{itemize}
+
+
+\subsubsection*{Add options to change used 3rd party libraries}
+It should be possible to customize which libraries the generated SDK includes.
+This is potentially already possible, as it is possible to create multiple default projects, that are cloned. A new version could be created, where other default libraries are installed, resulting in the final SDK having those included.
+For the default projects that are included with the solution, they must include as few as possible libraries, to reduce both the size of the generated SDK and the libraries it will provide when added to a project.
+
+\subsubsection*{Schema naming convention}
+At the moment, there is not defined any standard for how a class or property should be named.
+What is input in the schema, will be what is created in each SDK.
+However, languages often have different naming conventions they follow.
+An example of this is Java using \textit{camelCase}, C\# using \textit{PascalCase} and Python using \textit{snake\_case}.
+Therefore, there should be defined a naming convention, and each language map to follow the language-specific style.
+
+
+\subsubsection*{Add support for custom serilizers}
+When creating the Schema Provider, it should be possible to create custom sterilizer for data.
+It could be that the internal code handles a type as numbers, but the API exposes them as strings, or having a class being on encapsulation if a property, where the API only provides the encapsulated property. This should be implemented similarly to the ITypeConverter defined in section \ref{sec:implementation:built_in_types}, with a different name, possible \textit{ITypeSerilizer}
+
+
+\subsection{Expanding with an auto-generated HTTP client}
+As one of the major use cases of DTOs is HTTP communication, a suggested addition to the solution is an auto-generated HTTP client. 
+When analysing a code-space in the Schema Provider, it could further scan the same codespace if any HTTP endpoints have been defined, and include this information in the schema.
+The inclusion of an HTTP client would further benefit the use of the SDK, as neither the developers or users would need to manually built this on top of the generated SDK.
+This also refers back to the example showcased in both Listing \ref{code:http_example_csahrp} and Listing \ref{code:http_example_typescipt}, where the need for automated SDKs were introduced.
+To implement this HTTP client an update to the schemas is required, to allow for endpoints to be defined. An early design of this is shown in Listing \ref{code:http_client_schema}.
+\begin{lstlisting}[caption={Example of adding endpoints to the schema definition}, label={code:http_client_schema}, style=yaml]
+endpoints:
+  # Base URL
+  "localhost:3000":
+    - path: "api/users/{userId}"
+      method: "GET"
+      parameters:
+        userId: "string"
+      response: "SchemaExtractor.Model.Example.Person"
+    - path: "api/users"
+      method: "POST"
+      body: SchemaExtractor.Model.Example.CreatePersonDto
+      response: "SchemaExtractor.Model.Example.Person"
+schemas: {...}
+\end{lstlisting}
+Furthermore, the Diff Checker should be included in this updated schema. By both validating schemas and endpoints, there is further protection against unintentional changes.
+
+
+\subsection{Continuous Integration}
+To maximize the benefits of the Semantic Versioned SDK Generation prototype, it is necessary to integrate it into a continuous integration (CI) pipeline. Having the prototype included within CI processes has several notable advantages:
+
+\begin{itemize}
+    \item \textbf{Automated SDK Generation} Incorporating this prototype in a CI pipeline would automatically generate SDKs whenever there are changes. This means that they will always be up-to-date with the latest coding changes, which eliminates the possibility of mismatch between source code and SDKs.
+    
+    \item \textbf{Automated Testing and Validation} Integration of CI automates validation for produced SDKs. This makes sure that errors or inconsistencies are not introduced when changing DTOs or schema. Any breaking changes can be instantly found. Therefore, this continuous process ensures high-quality code
+\end{itemize}

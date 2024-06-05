@@ -1,0 +1,191 @@
+\section{Implementation \label{sec:implementation}}
+
+\subsection{Schema Provider}
+For this prototype, only a single Schema Provider has been implemented, which is a C\# Schema Provider.
+This will follow the principles defined in Section \ref{sec:design:schema_provider}.
+One of the main features is the mapping of built-in types.
+As the definition does not specify a built-in type for all the types provided in C\#, multiple types have been mapped to the same built-in type.
+An example of this is \textit{byte}, \textit{short} and \textit{int} all being mapped to a \textit{int32}.
+A full example of how types are mapped can be viewed in Listing \ref{lst:dto_type_provider}, where the mapping to \textit{int32} is highlighted. 
+\begin{lstlisting}[caption={C\# type schema mapping}, label={lst:dto_type_provider}, style=base_csharp]
+dtoDirectory
+    .AddMapping<bool>("boolean")
+    .AddMapping<char>("char")
+    .AddMapping<string>("string")
+     // ------------
+    .AddMapping<byte>("int32")
+    .AddMapping<sbyte>("int32")
+    .AddMapping<short>("int32")
+    .AddMapping<ushort>("int32") 
+    .AddMapping<decimal>("int32")
+    .AddMapping<int>("int32")
+    .AddMapping<uint>("int32")
+    .AddMapping<nint>("int32")
+    .AddMapping<nuint>("int32")
+     // ------------
+    .AddMapping<long>("int64")
+    .AddMapping<ulong>("int64")
+    .AddMapping<float>("float")
+    .AddMapping<double>("double")
+    .AddMapping<Guid>("guid")
+    .AddMapping<DateOnly>("dateOnly")
+    .AddMapping<DateTime>("date")
+    .AddMapping<DateTimeOffset>("dateTimeOffset")
+    .AddMapping(typeof(List<>), "List")
+    .AddMapping(typeof(HashSet<>), "List")
+    .AddMapping(typeof(Dictionary<object, object>), "Map");
+\end{lstlisting}
+\noindent
+Other than the mapping, the implementation does not have anything special, that is not discussed in section \ref{sec:design:schema_provider}.
+The program converts on class to a schema at a time and adds it to an internal storage.
+Afterwards, all associated classes are converted the same way.
+All the mapping is done according to the specification of the schema, with properties either being a built-in type, as mapped in Listing \ref{lst:dto_type_provider}, or another schema.
+Once all classes have been mapped, the list of all schemes can be extracted from the storage, in serialized.
+
+\subsection{Schema Consumer}
+The schema consumer is designed to allow adding multiple languages with minimum code.
+By limiting the unique amount of work required for each language to be implemented, the support is easily
+This is done by handling as much as the transformation behind the scenes, and only having a few interfaces that would need to be implemented to add support for a new language.
+
+\subsubsection{Built in types \label{sec:implementation:built_in_types}}
+To accommodate built-in types having different formats in different programming languages, it is possible to register custom converters. Listing \ref{lst:dto_type_consumer} shows how all built-in types are registered.
+\begin{lstlisting}[caption={Schema types to C\# mapping}, label={lst:dto_type_consumer}, style=base_csharp]
+dtoDirectory
+    .Register<object>("object")
+    .Register<bool>("boolean")
+    .Register<char>("char")
+    .Register<string>("string")
+    .Register<int>("int32")
+    .Register<long>("int64")
+    .Register<float>("float")
+    .Register<double>("double")
+    .Register<Guid>("guid")
+    .Register<DateOnly>("dateOnly")
+    .Register<DateTime>("date")
+    .Register<DateTimeOffset>("dateTimeOffset")
+    .Register(typeof(List<>), "List")
+    .Register(typeof(Dictionary<object, object>), "Map");
+\end{lstlisting}
+All registered types require a custom Type Converter, which is shown in Listing \ref{lst:ITypeConvertor}.
+\begin{lstlisting}[caption={ITypeConvertor interface}, label={lst:ITypeConvertor}, style=base_csharp]
+public interface ITypeConvertor<T> : ITypeConvertor
+{
+    Type ITypeConvertor.TypeToConvert() => typeof(T);
+    public string ConvertProperty(SchemaProperty context);
+}
+\end{lstlisting}
+\noindent
+The implementation of the type converter, tells the system how to format a property for the target language.
+An example of the need for this interface is when e.g. converting an \textit{int32}. In Java, the property type would be \textit{int}, while it would be \textit{number} in TypeScript.
+
+\subsubsection{Class Converter}
+Another one of the main features of the solution is the implementations of the \textit{IClassConverter} interface, which can be seen in Listing \ref{lst:class_converter}.
+This class serves as the main element to convert a schema to a complete SDK.
+
+\begin{lstlisting}[caption={IClassConvertor interface}, label={lst:class_converter}, style=base_csharp]
+public interface IConvertor
+{
+    public string TargetLanguage { get; }
+}
+
+public interface IClassConvertor : IConvertor
+{
+    /// <summary>
+    /// Defines the template from which a class template is created from.
+    /// Placeholders, conditions and more are supported via <see href="https://github.com/scriban/scriban">Scriban</see>.
+    /// </summary>
+    /// <returns>A complete class template.</returns>
+    public string GetClassTemplate();
+
+    /// <summary>
+    /// Formats a class property, to be ready to add into the class.
+    /// The output will be available when parsing the class template.
+    /// </summary>
+    /// <param name="classProperty">The details for the property.</param>
+    /// <returns>A formatted property.</returns>
+    public string FormatProperty(ClassProperty classProperty);
+
+    /// <summary>
+    /// An optional way to further transform a class template, after the system has performed the initial transformation.
+    /// </summary>
+    /// <param name="classTemplate">The pre parsed template</param>
+    /// <returns>An updated template</returns>
+    public ClassTemplate PostTransform(ClassTemplate classTemplate)
+    {
+        return classTemplate;
+    }
+}
+\end{lstlisting}
+\noindent
+To better understand how this interface is used, an in-depth explanation, with examples, is provided.
+The main functionality lies in the following three methods.
+\begin{itemize}
+    \item \textbf{GetClassTemplate}: This provides a class template, that when populated will create an entire class for the specific language.
+    This is the one of the core functions that drives the entire solution.
+    The code in Listing \ref{lst:java_class_converter_getclasstemplate} shows an example of a Java class.
+    \begin{lstlisting}[caption={Implementation of a Java class template}, label={lst:java_class_converter_getclasstemplate}, style=base_csharp]
+    package {{namespace}};
+    {% for import in imports %}
+    import {{import}};{% endfor %}
+    
+    public class {{class}} {
+        {% for property in properties %}
+        {{property}};{% endfor %}
+    
+        {% for method in data.methods %}
+        {{method}};{% endfor %}
+    
+    }
+    \end{lstlisting}
+
+    \item \textbf{FormatProperty}: Instead of having the class template containing checks properties, a separate method is instead used to parse these properties.
+    This should return a correctly formatted property, which can be directly inserted into the class template.
+    Listing \ref{lst:java_class_converter_formatproperty} shows an example on how Java properties are formatted.
+    \begin{lstlisting}[caption={How a Java property is defined}, label={lst:java_class_converter_formatproperty}, style=base]
+$"{(classProperty.Nullable ? "@Nullable" : "@NotNull")}\n\t" +
+$"private {classProperty.Type} {classProperty.Name};";
+    \end{lstlisting}
+    \noindent
+
+    \item \textbf{PostTransform}: The last method is an optional way to transform the Class Template further than is done behind the scenes, and create custom data for the specific language.
+    This is e.g.\ used in Java to create getters, which is not needed in either TypeScript or C\#.
+\end{itemize}
+
+\subsection{Diff Checker}
+When implementing the Difference Checker, a Diff Schema is needed. 
+The purpose of this schema is to return all changes to the user. 
+The checker will iterate over all schemes, returning a list of all changes.
+It will differentiate objects by the key of the schema. This means, that if a key name has been modified, the system will treat it as if the old schema has been removed, and a new one has been added.
+A full example of how the diff schema is defined can be viewed in Listing \ref{code:diff_example}.
+\begin{lstlisting}[caption={Diff schema example}, label={code:diff_example}, style=yaml]
+- type: "Removed"
+  namespace: "Example.Model"
+  name: "TestClass01"
+- type: "Added"
+  namespace: "Example.Model"
+  name: "TestClass02"
+- type: "Modified"
+  namespace: "Example.Model"
+  name: "TestClass03"
+  differences:
+    - path: "abstract"
+      oldValue: "false"
+      newValue: "true"
+    - path: "generics"
+      oldValue: "[TKey, TValue]"
+      newValue: "[TKey, TVValue, TDefault]"
+  properties:
+    - type: "Removed"
+      name: "MyProp1"
+    - type: "Added"
+      name: "MyProp2"
+    - type: "Modified"
+      name: "MyProp3"
+      differences:
+        - path: "type"
+          oldValue: "string"
+          newValue: "int32"
+        - path: "nullable"
+          oldValue: "true"
+          newValue: "false"
+\end{lstlisting}

@@ -1,0 +1,79 @@
+\section{Evalutaion}
+
+\subsection{An overview of the DTOs used to evaluate the prototype}
+To properly evaluate the prototype, an advanced DTO structure has been created. It involves a complex and nested structure.
+The example DTOs consist of 486 properties, across 93 different classes.
+Based on the results found in the analysis, it can be estimated that a manual conversion would take approximately 2 hours and 42 minutes, as seen in Equation \ref{equation:time_saved_example}.
+\begin{equation}
+\label{equation:time_saved_example}
+    486 \text{ properties} \times 20,07 \text{ seconds/properties} = 2h\ 42m\ 34s
+\end{equation}
+The example DTOs will be used in the data used in the entire evaluation and can be viewed in the source code, available from Appendix \ref{appendix:source_code}
+
+\subsection{Performance Evaluation \label{sec:evaluation:performence_evaluation}}
+From the analysis, manual DTO conversion was shown to take an average of 20.07 seconds per property, as documented in Table \ref{tab:dto_task}. This process is labor-intensive and prone to human errors, such as incorrect casing, syntax issues, and nullability errors. 
+In contrast, the automated solution provided by the prototype performed these conversions almost instantaneously. 
+Table \ref{tab:prototype_time_eval} shows the time it takes for each service to perform its respective task. The time showed, is without any overhead, such as saving the schema as a YAML file or loading schemas from a YAML file.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lr}
+    \toprule
+         Service & Time taken \\
+    \midrule
+         Schema Provider & 21ms \\
+         Schema Consumer & 150ms \\
+         Diff Checker & 10ms \\
+    \bottomrule
+    \end{tabular}
+    \caption{Prototype time evaluation}
+    \label{tab:prototype_time_eval}
+\end{table}
+\noindent
+The total time for running the Schema Provider, validating the schemas with the Diff Checker, and creating a new SDK is \textit{181 ms}, which is insignificant, when compared to the time a manual conversion would take, as shown in Equation \ref{equation:time_saved_example}.
+The task that takes the longest time, is consuming the schemas, and creating an SDK. This is mainly due to the I/O operations, where a file is created and written to, for each class generated.
+In scenarios where the Diff Checker checks all schemas, and validates there are no changes, this step could be omitted.
+\newline\newline
+The other major element of the prototype is to reduce the number of errors in the final SDK.
+The number of errors is tightly coupled with the implementation of the interfaces. If there are any errors in the supplied interfaces, the error will persist in every class. However, with a correct implementation, all errors are completely eradicated.
+For the prototype, the one error that remains is the system uses an invalid casing,
+This id due to the casing is extracted from the C\# code, and directly used in the templates.
+An implementation of a casing converter, as described by the requirements, would solve this issue.
+
+\subsection{Strengths and Limitations}
+The are both strengths and limitations to the developed prototype.
+\subsubsection*{Strengths}
+\begin{itemize}
+    \item \textbf{Efficiency}: As proven by table \ref{tab:prototype_time_eval}, the prototype improves the efficiency of a developer, allowing them to create multiple SDKs at once, and freeing up time to focus on more complex and higher-value tasks, than a time-consuming conversion.
+    \item \textbf{Accuracy}: The prototype eliminates all possibility of manual errors. Furthermore, it enforces the same conversions in the entire SDK, as the same rules are followed for every file.
+    \item \textbf{Scalability}: The prototype can easily handle complex schemas and large-scale projects, making the prototype suitable for large-scale enterprise solutions.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{Initial Setup}: While a lot of time and errors can be saved, it may be a time-consuming task to set up the prototype for a project. This may prevent small projects from utilizing the prototype, as the time it takes to implement, may be greater than the time a manual conversion will take.
+    \item \textbf{Customization}: The prototype has no configuration at all, and is therefor not suitable for a real-life scenario.
+    \item \textbf{Evaluation Scope}: The prototype has not been validated and tested by stakeholders, or in any real-life scenario, but is instead developed from a theoretical aspect, and tested with theoretical cases. 
+\end{itemize}
+
+\subsection{Fulfillment of requirements}
+The prototype has not implemented all requirements, as defined in the requirements in Table \ref{tab:requirements}. Instead, only the bare-bone required requirements has been implemented. The status of all implemented requirements can be viewed in Table \ref{tab:fulfilled_requirements}.
+\begin{table}[H]
+   \small
+   \centering
+   \begin{ctabularx}{\textwidth}{llX}
+   \toprule
+   \textit{\#} & \textit{Fulfilled} & \textit{Description} \\ 
+   \midrule
+   \textbf{1} & Yes & Requirement 1, and all sub-requirements have been fulfilled. \\
+   \textbf{2} & Yes & Requirement 2, and all sub-requirements have been fulfilled. \\
+   \textbf{3} & Partly & Requirement 3.1 has not been fulfilled. \newline All other sub-requirements have been fulfilled. \\
+   \textbf{4} & Yes & Requirement 4, and all sub-requirements have been fulfilled. \\
+   \textbf{5} & No & Requirement 5 has not been implemented. \\
+   \textbf{6} & No & Requirement 6 has not been implemented. \\
+   \textbf{7} & Yes & Requirement 7, and all sub-requirements have been fulfilled. \\
+   \bottomrule
+   \end{ctabularx}
+   \caption{Fufillment of the requirements} 
+   \label{tab:fulfilled_requirements}
+\end{table}

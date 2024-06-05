@@ -1,0 +1,39 @@
+\subsection{Template Engine}
+When creating the files for each individual, we should follow a predetermined template. This template would need to be unique for each language, the structure is different. A pseudo example of a template can be seen in Figure \ref{code:template-example}
+With this template, we can start populating the placeholders, with the correct data. There are different approaches available for either creating and/or populating these templates. We will compare a few, and select the one that best suit the usecase.
+
+\begin{figure}
+    \centering
+\begin{lstlisting}[style=base]
+package {{namespace}}
+
+{{foreach import in imports}}
+import {{import}}
+{{endfor}}
+
+public class {{className}} {
+
+    {{foreach property in properties}}
+    private {{propety.type}} {{property.name}};
+    {{endfor}}
+    
+}
+ \end{lstlisting}
+    \caption{Example of a template}
+    \label{code:template-example}
+\end{figure}
+
+
+\subsection{String Builder}
+
+
+\subsubsection{Fluid}
+When looking at benchmarks, it seems Fluid is one of the top performers when discussing template engines. It furthermore has quite extensive documentation, however, this documentation is in general for Fluid as a templating engine, and not specific as Fluid for C\#.
+This means the documentation directly linking to C\# is lacking. While testing the library, looping over a list, and accessing nested items in the loop was not successful, even while following the examples given in the documentation.
+For this reason, Fluid is ruled out as the template engine.
+
+\subsection{Scriban}
+
+
+\subsection{Cotle}
+

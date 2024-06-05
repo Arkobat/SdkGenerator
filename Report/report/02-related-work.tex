@@ -1,0 +1,43 @@
+\section{Related Work}
+\subsection*{OpenAPI \label{sec:analysis_openapi}}
+When describing an API, the de facto standard today is OpenAPI \cite{open-api}. This is a standard, that can fully describe an API, including both type definitions, endpoint information, authentication, and more. However, while the standard covers everything, a lot of knowledge about the type structure is lost. It supports neither polymorphism, inheritance, or generics. This can result in duplicate code, as each type will be defined multiple times, with a few changes in fields.
+While having this disadvantage, OpenAPI is still one of the most commonly used to describe an API. This gives it some advantages, as many third-party tools build on top of this, e.g. Swagger \cite{swagger} for documentation, automatic OpenAPI specification generation for multiple languages \cite{to_open_api_csharp} \cite{to_open_api_java} \cite{to_open_api_typescript}, and more.
+
+\subsection*{Kiota}
+Kiota \cite{kiota} generates multiple SDKs, supporting a variety of programming languages. This is done, by using the OpenAPI definition and creating a SDK based on that. As there is a lot of tools to convert a project to an OpenAPI specification \cite{to_open_api_csharp} \cite{to_open_api_java} \cite{to_open_api_typescript}, this solution should be able to convert most existing projects. The auto-generation Kiota performs is very similar to what this project aims to achieve, however, as discussed with OpenAPI, this does come with some limitations. In some projects, these limitations may be negligible, and in other applications, may be the reason the solution is not chosen.
+
+\subsection*{ElastichSearch SDK generating}
+ElasticSearch has already developed a tool similar to the proposed tool, and presented it at NDC London 2021 \cite{elastic-search-ndc}. However, instead of creating SDKs for multiple languages at once, they develop a language-specific SDK for C\#. Their tool is not public, and can therefore not be studied further than the presentation, which focused on promoting a specific Microsoft tool. However, relevant parts were still included in the presentation. An example of this is how they describe their API and models. As a large-scale JSON document is deemed too complex to manage, they opted for a TypeScript solution, describing all their endpoints and datatypes. Furthermore, these are enhanced with comments, further describing the API. For example, they show \textit{@since} and \textit{@stability}, which is metadata about the class. The example talked about can be viewed in Listing \ref{code:elsatic_search_dto_exmaple}. The code is automatically converted to a JSON scheme, which can be ingested by other applications, such as they present with C\#, or converted to other specifications, such as the OpenAPI standard.
+
+{
+\lstset{style=base_typescript}
+\begin{lstlisting}[caption={ElasticSearch model definition}, label={code:elsatic_search_dto_exmaple}]
+/**
+ * @rest_spec_name search
+ * @since 0.0.0
+ * @stability stable
+ */
+export class Request extends RequestBase {
+    path_parts: {
+        index?: Indices
+    }
+    query_parameters: {
+        allow_no_indices?: boolean
+        ...
+        size?: integer
+        from?: integer
+        sort?: string | string[]
+    }
+    body: {
+    /** @aliases aggs */
+    aggregations?: Dictornary<string, AggregationContainer>
+    collapse?: FieldCollapse
+    /** 
+    * If true, returns detailed information about score computation as part of the hit
+    * @server_default false
+    */
+    explain?: boolean
+    }
+}
+\end{lstlisting}
+}

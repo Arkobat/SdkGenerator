@@ -1,0 +1,161 @@
+\section*{Notes}
+
+\subsection*{Articles}
+\begin{itemize}
+    \item From Rasmus: \href{https://github.blog/2024-01-03-our-move-to-generated-sdks/}{Our move to generated SDKs}
+\end{itemize}
+
+\subsection*{Thoughts}
+\begin{itemize}
+    \item \textbf{Default project}: The SDK should be generated on top of a default project, where all the required files are.
+    For Java, this could be a Java 8 maven project, with e.g. JetBrains nullable annotations
+    For Typescript, this could be an NPM module, with some basic things installed.
+    Access Modifier, Type, Name, Value 
+
+    \item \textbf{Variable declarations patterns} Different languages declare variables differently.
+    Java, C\#, Python, TypeScript, Go, Rust
+    \hyperlink{https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjuc3AMG0GuHzqNIR1eLR4h5hTY-DJBgT9LCXziFdJMHiQzRC8L5_5zBrTUuujObkfBtcfyA8XmqK7JbY-vGf-i2M4Fx2Nn8nT6I_9rw0Qg-hw3T40Ha40qjA82Aqs8TLLz1Z5XEJdXE6rpWLQnMc3agYGDKRKda4C5yQnVUQKTWIlyz76rizvgJXNH/s608/2022-12-04_110650.png}{Definations}
+    
+    \item \textbf{Naming conventions} camelCase, PascalCase, snake\_case, kebab-case \\
+
+    \[Name(carnonical: "IoStream")\]
+
+    \item \textbf{Variable declerations}
+    
+    \item \textbf{Version Control} An option to export the SDK and give it an id. When a new change is published, it will check if there is any changes from the current SDK.
+    Furthermore, an option to detect if the change was a breaking change, e.g. changing a route, removing an element from the body, changing a route signature
+    
+    \item \textbf{OpenApi} Check if the code should look thru the code, or take input from OpenAPI (or similar) and generate from that.
+    Note. Does not support generics, inheritence or polymopishm. \href{https://document360.com/blog/open-api/}{Source}
+    
+    \item \textbf{Type Serilizer} It should be possible to create a custom sterilizer for each type.
+    The sterilizer should have different options, such as required imports (which are different for each language.
+    An option could be having it extend the different languages, e.g. "MySerlizier : JavaSerlizier, TypeScriptSerlizier"
+
+    \item \textbf{Template engine} Scriban, Cottle, Fluid \hyperlink{https://r3c.github.io/cottle/benchmark.html}{Cottle benchmark}
+    
+    \item \textbf{Keep it simple} Pas på med ekstra features. F.eks. property type. Det er fint til produktet, men giver intent akademisk
+
+    \item \textbf{Roslyn} Compile time code anylse ting ting.
+https://github.com/Digizuite/digizuite.core/tree/feature/sdk-generation/SourceGenerators/SdkLowLevelGenerator
+
+    \item \textbf{Java implementation} Compile time code anylse ting ting.
+        \begin{itemize}
+            \item \textbf{Maven} - Automatic getter / setter / constructor
+            \item \textbf{Lombok} - Automatic getter / setter / constructor
+            \item \textbf{Retrofit} - Automatic HTTP client
+        \end{itemize}
+
+   \item \textbf{Standard}
+\begin{verbatim}
+    endpoints [{
+        url: "localhost:/api/users/{userId}",
+        placeholders [{
+            name: "userId",
+            type: "number"
+        }],
+        parameters: [{
+            name: "deprecated",
+            type: "boolean"
+        }],
+        body: {
+        
+        }
+    }]
+\end{verbatim}
+
+    \item \textbf{Planning} \hyperlink{https://tree.nathanfriend.io/}{Website}
+    \begin{verbatim}
+Master Theisis (code part) [27.5 days]
+  Generate DTOs [21]
+    Default projects [1.5 day]
+      Versioning - 0.5 days]
+      Package Manager - 0.5 days
+      Packages - 0.5 days
+    Runtime vs compile time [6.5 days]
+      Reflection [1.5 days]
+        Understanding - 0.5 days
+        Testing - 1 day
+      Ryslin [5 days]
+        Understanding - 2 days
+        Testing - 2 days
+        AST - 1 day
+    Template Engine [3 days]
+      - Research [2 days]
+      - Testing [1 day]
+    Creating the converter [8 days] [Blockeb by: Template Engine, Runtime vs compile time, default projects]
+      Basic model [4 days]
+        Mapping: 2 days
+        Convert to Java: 1 day
+        Convert to TS: 1 day
+      Inheritance - [2 days]
+        Mapping: 1 day
+        Java: 0.5. days
+        TS: 0.5 day
+      Generics - [2 days]
+        Mapping: 1 day
+        Java: 0.5 days
+        TS: 0.5 day
+    Configuration [2 days]
+      JSON parsers [0.5 days]
+      Versions [0.5 days]
+      Property names [1 day]
+        Default [0.5 days]
+        Custom [0.5 days]
+          System.Text.Json
+          Newtonsoft
+      Custom serilizer [1 day]
+      
+  Version Validation [2.5 days]  [Blockeb by: Creating the converter]
+    Defining rules [0.5 day]
+    Implementing rules [2 days]
+  Generate interfaces [4 days] [Blockeb by: Creating converter]
+    Creating template [1 day]
+      Java [0.5 days]
+      TS [0.5 days]
+    Creating model [2 days]
+    Testing [1 day]
+  Implementing interfaces [Wont do]
+    Authentication
+    Rate limit
+    Errors
+    \end{verbatim}
+    
+
+\begin{csharp}
+// Variable
+public string MyVariable = "Hello World!";
+
+// Fuction
+public string MyMethod(sting arg)
+{
+  // body
+}
+\end{csharp}
+
+\begin{java}
+// Variable
+public String myVariable = "Hello World!";
+
+// Fuction
+public String myMethod(sting arg)
+{
+  // body
+}
+\end{java}
+
+\begin{typescript}
+// Variable
+myVariable: string = "Hello World!";
+
+// Fuction
+function myMethod(arg: string): string
+{
+  // body
+}
+\end{typescript}
+
+
+\end{itemize}
+
+
